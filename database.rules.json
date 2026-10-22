@@ -1,0 +1,37 @@
+{
+  "rules": {
+    "artifacts": {
+      "bhavanix_production": {
+        "public": {
+          "data": {
+            "profile": {
+              ".read": true,
+              ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com'"
+            },
+            "links": {
+              ".read": true,
+              ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com'",
+              "$linkId": {
+                // Mengizinkan admin menulis seluruh properti link, atau increment atomic clickCount
+                ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com' || (newData.child('clickCount').exists() && (!data.exists() || newData.child('clickCount').val() >= data.child('clickCount').val()))"
+              }
+            },
+            "stats_daily": {
+              ".read": "auth != null && auth.token.email === 'haf.hafian@gmail.com'",
+              "$date": {
+                // Publik / serverless dapat menambah views dan clicks harian
+                ".read": "auth != null && auth.token.email === 'haf.hafian@gmail.com'",
+                ".write": true
+              }
+            },
+            "apps": {
+              // Arsip data lama: read-only untuk publik & admin, tidak dihapus sebelum terverifikasi
+              ".read": true,
+              ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com'"
+            }
+          }
+        }
+      }
+    }
+  }
+}

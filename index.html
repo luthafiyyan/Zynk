@@ -3,235 +3,788 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zynk by Haf</title>
     
-    <!-- FAVICON -->
+    <!-- SEO & Metadata Dasar -->
+    <title id="meta-title">Zynk — Personal Bio Link & Portfolio</title>
+    <meta name="description" id="meta-desc" content="Personal bio link modern oleh Luthafiyyan. Temukan proyek, portfolio, dan tautan sosial terkurasi di satu tempat.">
+    <meta name="author" content="Luthafiyyan">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" id="og-url" content="https://zynxid.vercel.app/">
+    <meta property="og:title" id="og-title" content="Zynk — Personal Bio Link">
+    <meta property="og:description" id="og-desc" content="Personal bio link modern oleh Luthafiyyan. Temukan proyek, portfolio, dan tautan sosial terkurasi di satu tempat.">
+    <meta property="og:image" id="og-image" content="assets/zynk-badge.svg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" id="tw-url" content="https://zynxid.vercel.app/">
+    <meta name="twitter:title" id="tw-title" content="Zynk — Personal Bio Link">
+    <meta name="twitter:description" id="tw-desc" content="Personal bio link modern oleh Luthafiyyan.">
+    <meta name="twitter:image" id="tw-image" content="assets/zynk-badge.svg">
+
+    <!-- Favicon -->
     <link rel="icon" href="assets/zynk-favicon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="assets/zynk-badge.svg" type="image/svg+xml">
     
-    <!-- 1. Tailwind CSS (CDN) -->
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        zynk: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     
-    <!-- 2. Lucide Icons (CDN) -->
+    <!-- Lucide Icons (CDN) -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- 3. Google Fonts (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Custom Styles -->
+    <!-- Dynamic Theme & Glassmorphism Styles -->
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.4);
+        :root {
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-light: rgba(37, 99, 235, 0.12);
+            --accent-glow: rgba(37, 99, 235, 0.35);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        }
+
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
         }
 
-        /* Smooth Fade In Animation */
-        .fade-in { animation: fadeIn 0.6s ease-out forwards; opacity: 0; transform: translateY(10px); }
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
 
-        /* Background Mesh Gradient */
-        .bg-mesh {
-            background-color: #ffdee9;
-            background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+        /* Mesh Backgrounds */
+        .bg-mesh-light {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(191, 219, 254, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(254, 215, 226, 0.45) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(221, 214, 254, 0.4) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(204, 251, 241, 0.45) 0px, transparent 50%);
             background-attachment: fixed;
         }
-        
-        /* Floating Blobs Animation */
+
+        .dark .bg-mesh-dark {
+            background-color: #0b0f19;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.35) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(88, 28, 135, 0.25) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(19, 78, 74, 0.25) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(30, 27, 75, 0.3) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Ambient Blobs */
         .blob {
             position: absolute;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.6;
-            animation: float 10s infinite alternate;
+            filter: blur(90px);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: float 14s infinite alternate ease-in-out;
         }
-        @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(20px, 40px); } }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(25px, 35px) scale(1.05); }
+            100% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Custom Accent Utility Classes */
+        .text-accent { color: var(--accent-color); }
+        .bg-accent { background-color: var(--accent-color); }
+        .bg-accent-light { background-color: var(--accent-light); }
+        .border-accent { border-color: var(--accent-color); }
+        .ring-accent:focus { --tw-ring-color: var(--accent-color); }
+
+        /* Skeleton Shimmer Animation */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(200, 200, 200, 0.2) 25%, rgba(200, 200, 200, 0.35) 50%, rgba(200, 200, 200, 0.2) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.6s infinite;
+        }
+        .dark .skeleton {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.6s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Subtle Fade In */
+        .fade-in {
+            animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Smooth Tap & Hover */
+        .link-card {
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .link-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 14px 28px -10px var(--accent-glow), 0 6px 12px -4px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent-color);
+        }
+        .link-card:active {
+            transform: translateY(0) scale(0.99);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.4); border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.7); }
     </style>
 </head>
-<body class="bg-mesh min-h-screen text-gray-800 relative overflow-x-hidden flex flex-col">
+<body class="bg-mesh-light dark:bg-mesh-dark min-h-screen text-slate-800 dark:text-slate-100 relative overflow-x-hidden flex flex-col selection:bg-blue-500 selection:text-white">
 
-    <!-- Background Blobs -->
-    <div class="blob bg-purple-400 w-64 h-64 md:w-96 md:h-96 rounded-full top-0 left-0 mix-blend-multiply"></div>
-    <div class="blob bg-blue-400 w-64 h-64 md:w-80 md:h-80 rounded-full bottom-0 right-0 animation-delay-2000 mix-blend-multiply"></div>
-    <div class="blob bg-pink-400 w-64 h-64 md:w-80 md:h-80 rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animation-delay-4000 mix-blend-multiply"></div>
+    <!-- Ambient Gradient Blobs -->
+    <div class="blob bg-blue-400 dark:bg-blue-600 w-72 h-72 md:w-96 md:h-96 rounded-full top-4 left-4 mix-blend-multiply dark:mix-blend-screen"></div>
+    <div class="blob bg-purple-400 dark:bg-purple-600 w-72 h-72 md:w-80 md:h-80 rounded-full bottom-20 right-4 mix-blend-multiply dark:mix-blend-screen" style="animation-delay: 2s;"></div>
+    <div class="blob bg-pink-400 dark:bg-pink-700 w-64 h-64 md:w-80 md:h-80 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mix-blend-multiply dark:mix-blend-screen" style="animation-delay: 4s;"></div>
 
-    <!-- NAVBAR -->
-    <nav class="sticky top-0 z-50 px-4 md:px-6 py-4 glass border-b-0 border-t-0 rounded-none bg-white/20">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2.5 md:gap-3 cursor-pointer group" onclick="switchView('home')">
-                <!-- LOGO -->
-                <img src="assets/zynk-icon.svg" alt="Zynk Logo" class="w-8 h-8 md:w-9 md:h-9 object-contain drop-shadow-md transition-transform group-hover:scale-110">
-                <span class="font-bold text-lg md:text-xl tracking-tight text-gray-900">Zynk</span>
-            </div>
+    <!-- NAVBAR (Header Atas) -->
+    <header class="sticky top-0 z-40 px-4 md:px-6 py-3.5 glass-nav transition-all">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <!-- Brand Logo -->
+            <button onclick="navigateTo('home')" class="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl px-1.5 py-1" aria-label="Beranda Zynk">
+                <img src="assets/zynk-icon.svg" alt="Zynk Logo" class="w-8 h-8 object-contain drop-shadow transition-transform group-hover:scale-110">
+                <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">Zynk</span>
+            </button>
             
-            <div id="auth-buttons">
-                <!-- Buttons injected via JS -->
+            <!-- Quick Actions (Theme & Admin Settings) -->
+            <div class="flex items-center gap-2" id="nav-actions">
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleThemeManual()" id="theme-toggle-btn" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-800/60 rounded-xl transition border border-transparent hover:border-slate-200 dark:hover:border-slate-700" title="Ganti Tema" aria-label="Ganti Tema Terang/Gelap">
+                    <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+
+                <!-- Admin Access Button -->
+                <div id="auth-buttons">
+                    <!-- Dynamically injected via JS -->
+                </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12 w-full flex-grow flex flex-col pb-24">
+    <!-- KONTEN UTAMA -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-6 md:py-10 w-full flex-grow flex flex-col items-center pb-28 z-10">
         
-        <!-- 1. VIEW: HOME (Public List) -->
-        <div id="view-home" class="fade-in w-full">
-            <div class="text-center mb-10 md:mb-16">
-                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 tracking-tight mb-4 drop-shadow-sm leading-tight">
-                    Zynk <span class="text-blue-600 font-light">by Haf</span>
+        <!-- ========================================== -->
+        <!-- 1. VIEW: PUBLIC BIO LINK (HALAMAN UTAMA) -->
+        <!-- ========================================== -->
+        <section id="view-home" class="fade-in w-full max-w-lg flex flex-col items-center">
+            
+            <!-- Profile Header -->
+            <header class="text-center w-full mb-6">
+                <!-- Avatar with Glowing Border -->
+                <div class="relative inline-block mb-4 group">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full p-1 bg-gradient-to-tr from-blue-500 via-indigo-500 to-pink-500 shadow-xl shadow-blue-500/20 mx-auto transition-transform duration-300 group-hover:scale-105">
+                        <img id="pub-avatar" src="assets/zynk-badge.svg" alt="Avatar Profil" class="w-full h-full object-cover rounded-full bg-white dark:bg-slate-900 shadow-inner" onerror="this.src='assets/zynk-badge.svg'">
+                    </div>
+                    <!-- Verified / Online Indicator -->
+                    <div class="absolute bottom-1 right-2 bg-emerald-500 border-2 border-white dark:border-slate-900 w-5 h-5 rounded-full shadow-md" title="Aktif"></div>
+                </div>
+
+                <!-- Nama & Bio -->
+                <h1 id="pub-name" class="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-2 flex items-center justify-center gap-1.5">
+                    <span>Luthafiyyan</span>
+                    <i data-lucide="badge-check" class="w-5 h-5 text-blue-500 fill-blue-500/20 inline-block"></i>
                 </h1>
-                <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto font-medium opacity-80 px-4">
-                    Koleksi aplikasi dan proyek eksperimental yang dikurasi dengan sepenuh hati.
+                <p id="pub-bio" class="text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-md mx-auto font-normal leading-relaxed px-2">
+                    Personal bio link & showcase proyek terkurasi.
                 </p>
+
+                <!-- Social Icons Row -->
+                <nav id="pub-socials" class="flex flex-wrap justify-center items-center gap-2.5 mt-4 pt-1" aria-label="Media Sosial">
+                    <!-- Social icons injected via JS -->
+                </nav>
+            </header>
+
+            <!-- Category Filter Tabs -->
+            <nav id="category-filter-container" class="w-full mb-6" aria-label="Filter Kategori">
+                <div id="category-pills" class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start sm:justify-center px-1">
+                    <!-- Filter pills injected via JS -->
+                </div>
+            </nav>
+
+            <!-- Skeleton Loading State -->
+            <div id="loading-skeleton" class="w-full space-y-4 py-2">
+                <div class="skeleton h-20 rounded-2xl w-full"></div>
+                <div class="skeleton h-20 rounded-2xl w-full"></div>
+                <div class="skeleton h-20 rounded-2xl w-full"></div>
             </div>
 
-            <!-- Loading Spinner -->
-            <div id="loading-indicator" class="flex justify-center py-20">
-                <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-
-            <!-- App Grid (Responsive: 1 col mobile, 2 col tablet, 3 col desktop) -->
-            <div id="app-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Cards injected via JS -->
+            <!-- Links Container -->
+            <div id="links-container" class="w-full space-y-3.5">
+                <!-- Link cards injected via JS -->
             </div>
 
             <!-- Empty State -->
-            <div id="empty-state" class="hidden text-center py-20 glass rounded-3xl mx-4 md:mx-0">
-                <i data-lucide="box" class="mx-auto w-12 h-12 text-gray-400 mb-2"></i>
-                <p class="text-gray-500">Belum ada aplikasi.</p>
-            </div>
-        </div>
-
-        <!-- 2. VIEW: LOGIN -->
-        <div id="view-login" class="hidden fade-in w-full flex items-center justify-center my-auto">
-            <div class="glass w-full max-w-md p-8 rounded-3xl text-center shadow-xl">
-                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="lock" class="w-8 h-8 text-blue-600"></i>
+            <div id="empty-state" class="hidden text-center py-16 px-6 glass-card rounded-3xl w-full my-4">
+                <div class="w-14 h-14 bg-blue-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-3 text-blue-500">
+                    <i data-lucide="link-2-off" class="w-7 h-7"></i>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-1">Admin Area</h2>
-                <p class="text-sm text-gray-500 mb-4">Login untuk mengelola konten</p>
+                <h2 class="font-bold text-lg text-slate-800 dark:text-slate-100 mb-1">Belum Ada Tautan</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
+                    Tautan belum ditambahkan atau sedang dinonaktifkan pada kategori ini.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2. VIEW: LOGIN ADMIN (AMAN, TANPA EXPOSE EMAIL) -->
+        <!-- ========================================== -->
+        <section id="view-login" class="hidden fade-in w-full max-w-md my-auto py-10">
+            <div class="glass-card p-8 md:p-10 rounded-3xl text-center shadow-2xl relative overflow-hidden">
+                <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner">
+                    <i data-lucide="shield-check" class="w-8 h-8"></i>
+                </div>
                 
-                <div class="mb-6 inline-block px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-full border border-blue-100">
-                    Khusus: haf.hafian@gmail.com
-                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Portal Administrator</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+                    Masuk dengan akun Google yang terdaftar untuk mengelola profil, tautan, dan memantau statistik Zynk.
+                </p>
 
-                <button onclick="handleGoogleLogin()" class="w-full py-3 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 shadow-md rounded-xl flex items-center justify-center gap-3 transition-all active:scale-95 group">
-                    <i data-lucide="chrome" class="text-blue-500 group-hover:scale-110 transition-transform"></i> Sign in with Google
+                <!-- Tombol Sign in dengan Google -->
+                <button onclick="handleGoogleLogin()" class="w-full py-3.5 px-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-800 dark:text-white font-semibold border border-slate-200 dark:border-slate-700 shadow-md hover:shadow-lg rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-95 group focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span>Lanjutkan dengan Google</span>
                 </button>
-                <button onclick="switchView('home')" class="w-full mt-4 py-2 text-gray-500 hover:text-gray-800 text-sm transition-colors">
-                    Kembali ke Home
+
+                <button onclick="navigateTo('home')" class="w-full mt-5 py-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white text-sm font-medium transition-colors flex items-center justify-center gap-1.5">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
                 </button>
             </div>
-        </div>
+        </section>
 
-        <!-- 3. VIEW: ADMIN DASHBOARD -->
-        <div id="view-admin" class="hidden fade-in w-full">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 bg-white/30 p-4 rounded-2xl border border-white/40">
+        <!-- ========================================== -->
+        <!-- 3. VIEW: ADMIN DASHBOARD LENGKAP -->
+        <!-- ========================================== -->
+        <section id="view-admin" class="hidden fade-in w-full max-w-5xl">
+            
+            <!-- Dashboard Header & Top Bar -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 glass-card p-4 md:p-5 rounded-2xl">
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Dashboard</h2>
-                    <div class="flex items-center gap-2 mt-1 text-sm text-gray-600 flex-wrap">
-                        <span class="flex items-center gap-1 bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-bold">
-                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Online
+                    <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span>Dashboard Zynk</span>
+                        <span class="inline-flex items-center gap-1 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 text-xs px-2.5 py-0.5 rounded-full font-semibold border border-emerald-200 dark:border-emerald-800">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Admin Aktif
                         </span>
-                        <span id="admin-email-display" class="font-mono text-xs md:text-sm"></span>
+                    </h2>
+                    <p id="admin-user-info" class="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5"></p>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <button onclick="navigateTo('home')" class="flex-1 sm:flex-none px-3.5 py-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm text-sm font-medium transition flex items-center justify-center gap-1.5">
+                        <i data-lucide="external-link" class="w-4 h-4"></i> Lihat Publik
+                    </button>
+                    <button onclick="handleLogout()" class="flex-1 sm:flex-none px-3.5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl shadow-sm text-sm font-medium transition flex items-center justify-center gap-1.5">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Migration Alert (Jika data lama apps terdeteksi dan belum dimigrasikan) -->
+            <div id="migration-banner" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 border border-amber-200 dark:border-amber-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-amber-500 text-white rounded-xl shadow-sm">
+                        <i data-lucide="database" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-amber-900 dark:text-amber-200">Data Aplikasi Lama Terdeteksi</h4>
+                        <p class="text-xs text-amber-700 dark:text-amber-400">Migrasikan data proyek lama ke skema tautan Bio Link baru secara otomatis.</p>
                     </div>
                 </div>
-                <div class="flex gap-2 w-full md:w-auto">
-                    <button onclick="switchView('home')" class="flex-1 md:flex-none px-4 py-2 bg-white hover:bg-gray-50 text-gray-800 rounded-xl border border-gray-200 shadow-sm transition flex items-center justify-center gap-2">
-                        <i data-lucide="monitor" class="w-4 h-4"></i> <span class="hidden sm:inline">Preview</span>
-                    </button>
-                    <button onclick="handleLogout()" class="flex-1 md:flex-none px-4 py-2 bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/30 rounded-xl transition flex items-center justify-center gap-2">
-                        <i data-lucide="log-out" class="w-4 h-4"></i> Logout
-                    </button>
+                <button onclick="executeBrowserMigration()" id="btn-migrate" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow transition shrink-0 flex items-center gap-1.5">
+                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Migrasikan Sekarang
+                </button>
+            </div>
+
+            <!-- Dashboard Navigation Tabs -->
+            <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 mb-6 overflow-x-auto pb-1 scrollbar-none" role="tablist">
+                <button onclick="switchAdminTab('links')" id="tab-btn-links" class="admin-tab-btn flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20" role="tab">
+                    <i data-lucide="list-ordered" class="w-4 h-4"></i> <span>Tautan</span>
+                    <span id="admin-badge-count" class="px-2 py-0.5 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">0</span>
+                </button>
+                <button onclick="switchAdminTab('profile')" id="tab-btn-profile" class="admin-tab-btn flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white" role="tab">
+                    <i data-lucide="user" class="w-4 h-4"></i> <span>Profil & Sosial</span>
+                </button>
+                <button onclick="switchAdminTab('appearance')" id="tab-btn-appearance" class="admin-tab-btn flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white" role="tab">
+                    <i data-lucide="palette" class="w-4 h-4"></i> <span>Tampilan & Tema</span>
+                </button>
+                <button onclick="switchAdminTab('analytics')" id="tab-btn-analytics" class="admin-tab-btn flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white" role="tab">
+                    <i data-lucide="bar-chart-2" class="w-4 h-4"></i> <span>Statistik</span>
+                </button>
+            </div>
+
+            <!-- ============================== -->
+            <!-- TAB 1: KELOLA TAUTAN (LINKS) -->
+            <!-- ============================== -->
+            <div id="admin-tab-links" class="admin-tab-content space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    
+                    <!-- Form Input / Edit Link -->
+                    <div class="lg:col-span-5">
+                        <div class="glass-card p-5 md:p-6 rounded-3xl sticky top-20">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 id="link-form-title" class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                                    <i data-lucide="plus-circle" class="w-5 h-5 text-blue-600"></i> Tambah Tautan
+                                </h3>
+                                <button type="button" onclick="resetLinkForm()" id="btn-cancel-edit" class="hidden text-xs text-slate-500 hover:text-red-500 font-medium">Batal Edit</button>
+                            </div>
+
+                            <form id="link-form" onsubmit="handleSaveLink(event)" class="space-y-4">
+                                <input type="hidden" id="link-id">
+                                <input type="hidden" id="link-position">
+
+                                <div>
+                                    <label for="link-title" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">Judul Tautan *</label>
+                                    <input type="text" id="link-title" required placeholder="Contoh: GitHub Portfolio" class="w-full px-3.5 py-2.5 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                </div>
+
+                                <div>
+                                    <label for="link-url" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">URL Tujuan *</label>
+                                    <input type="url" id="link-url" required placeholder="https://..." class="w-full px-3.5 py-2.5 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                </div>
+
+                                <div>
+                                    <label for="link-desc" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">Deskripsi Pendek</label>
+                                    <textarea id="link-desc" rows="2" placeholder="Deskripsi ringkas tentang tautan ini" class="w-full px-3.5 py-2.5 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition resize-none"></textarea>
+                                </div>
+
+                                <div>
+                                    <label for="link-category" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">Kategori</label>
+                                    <input type="text" id="link-category" list="category-suggestions" placeholder="Productivity, Portfolio, Social, dll." class="w-full px-3.5 py-2.5 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                    <datalist id="category-suggestions">
+                                        <!-- Injected via JS -->
+                                    </datalist>
+                                </div>
+
+                                <!-- Icon Upload / Preview -->
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">Ikon Tautan</label>
+                                    <div class="flex items-center gap-3 p-2 bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                                        <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-700 overflow-hidden shrink-0 flex items-center justify-center border border-slate-200 dark:border-slate-600">
+                                            <img id="link-icon-preview" src="assets/zynk-icon.svg" alt="Preview Ikon" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="flex-grow">
+                                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-700 text-xs font-semibold rounded-lg border border-slate-200 dark:border-slate-600 hover:bg-slate-50 transition shadow-sm">
+                                                <i data-lucide="upload" class="w-3.5 h-3.5"></i> Unggah Ikon
+                                                <input type="file" accept="image/*" class="hidden" onchange="handleLinkIconUpload(this)">
+                                            </label>
+                                            <button type="button" onclick="clearLinkIcon()" class="ml-2 text-[11px] text-slate-400 hover:text-red-500">Hapus</button>
+                                            <p class="text-[10px] text-slate-400 mt-0.5">Maks 500KB (auto kompres)</p>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="link-icon-data">
+                                </div>
+
+                                <!-- Toggle Aktif / Nonaktif -->
+                                <div class="flex items-center justify-between p-3 bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                                    <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Tampilkan di Halaman Publik</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="link-is-active" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+
+                                <div class="flex gap-2 pt-2">
+                                    <button type="submit" id="btn-save-link" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition text-sm flex items-center justify-center gap-1.5">
+                                        <i data-lucide="check" class="w-4 h-4"></i> Simpan Tautan
+                                    </button>
+                                    <button type="button" onclick="resetLinkForm()" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold rounded-xl transition text-sm">
+                                        Batal
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- List Tautan dengan Drag & Drop Reordering -->
+                    <div class="lg:col-span-7 space-y-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Daftar Tautan (Seret atau klik panah untuk mengubah urutan)</span>
+                        </div>
+
+                        <div id="admin-links-list" class="space-y-2.5">
+                            <!-- Link items injected via JS -->
+                        </div>
+
+                        <div id="admin-links-empty" class="hidden text-center py-12 glass-card rounded-2xl">
+                            <p class="text-sm text-slate-400">Belum ada tautan. Gunakan formulir di sebelah kiri untuk menambah tautan baru.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Form (Sticky on Desktop) -->
-                <div class="lg:col-span-1">
-                    <div class="glass p-6 rounded-3xl lg:sticky lg:top-24">
-                        <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                            <i data-lucide="edit-2" class="w-5 h-5 text-blue-600"></i>
-                            <span id="form-title">Tambah Aplikasi</span>
-                        </h3>
-                        <form id="app-form" onsubmit="handleSaveApp(event)" class="space-y-4">
-                            <input type="hidden" id="app-id">
-                            <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">Nama Aplikasi</label>
-                                <input type="text" id="app-name" required class="w-full mt-1 px-4 py-2 bg-white/50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all">
+            <!-- ============================== -->
+            <!-- TAB 2: PROFIL & MEDIA SOSIAL -->
+            <!-- ============================== -->
+            <div id="admin-tab-profile" class="admin-tab-content hidden space-y-6">
+                <div class="max-w-2xl mx-auto glass-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                        <i data-lucide="user-check" class="w-5 h-5 text-blue-600"></i> Pengaturan Profil Pribadi
+                    </h3>
+
+                    <form id="profile-form" onsubmit="handleSaveProfile(event)" class="space-y-6">
+                        <!-- Avatar Upload & Auto-Compress -->
+                        <div class="flex flex-col sm:flex-row items-center gap-5 p-4 bg-white/40 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 rounded-2xl">
+                            <div class="relative w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500 shadow-md shrink-0">
+                                <img id="profile-avatar-preview" src="assets/zynk-badge.svg" alt="Preview Avatar" class="w-full h-full object-cover">
                             </div>
-                            <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">Kategori</label>
-                                <input type="text" id="app-category" placeholder="Contoh: Productivity" class="w-full mt-1 px-4 py-2 bg-white/50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all">
+                            <div class="text-center sm:text-left flex-grow">
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white">Foto Avatar</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Foto akan otomatis dikompres ke resolusi optimal (256x256 px).</p>
+                                <label class="cursor-pointer inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow transition">
+                                    <i data-lucide="camera" class="w-4 h-4"></i> Pilih Foto Baru
+                                    <input type="file" accept="image/*" class="hidden" onchange="handleProfileAvatarUpload(this)">
+                                </label>
+                                <input type="hidden" id="profile-avatar-url">
                             </div>
-                            <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">Deskripsi</label>
-                                <textarea id="app-desc" required rows="3" class="w-full mt-1 px-4 py-2 bg-white/50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all resize-none"></textarea>
+                        </div>
+
+                        <!-- Nama Lengkap -->
+                        <div>
+                            <label for="profile-name" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">Nama Tampilan</label>
+                            <input type="text" id="profile-name" required placeholder="Luthafiyyan" class="w-full px-4 py-2.5 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        </div>
+
+                        <!-- Bio Satu Kalimat -->
+                        <div>
+                            <label for="profile-bio" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">Bio Ringkas (Satu Kalimat)</label>
+                            <textarea id="profile-bio" rows="2" maxlength="180" placeholder="Software Engineer & Creator of Zynk." class="w-full px-4 py-2.5 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition resize-none"></textarea>
+                        </div>
+
+                        <!-- Tautan Media Sosial Dinamis -->
+                        <div class="border-t border-slate-200 dark:border-slate-700 pt-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">Ikon Media Sosial</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Tautan sosial akan ditampilkan di bawah bio pada header publik.</p>
+                                </div>
+                                <button type="button" onclick="addSocialItem()" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl transition flex items-center gap-1">
+                                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Sosial
+                                </button>
                             </div>
-                            
-                            <!-- Image Upload -->
+
+                            <div id="socials-list" class="space-y-2.5">
+                                <!-- Social items injected via JS -->
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition text-sm flex items-center justify-center gap-2">
+                            <i data-lucide="save" class="w-4 h-4"></i> Simpan Perubahan Profil
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- TAB 3: TAMPILAN & TEMA (LIVE PREVIEW) -->
+            <!-- ============================== -->
+            <div id="admin-tab-appearance" class="admin-tab-content hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Form Pilihan Tema & Aksen -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="glass-card p-6 rounded-3xl space-y-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i data-lucide="sliders" class="w-5 h-5 text-blue-600"></i> Kustomisasi Tema
+                            </h3>
+
+                            <!-- Pilihan Mode Tema -->
                             <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase mb-2 block tracking-wide">Icon</label>
-                                <div class="flex items-center gap-4 p-2 border border-gray-200 rounded-xl bg-white/30">
-                                    <div class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 border">
-                                        <img id="icon-preview" src="https://placehold.co/100x100?text=Icon" class="w-full h-full object-cover">
+                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">Mode Tema</label>
+                                <div class="grid grid-cols-3 gap-2.5">
+                                    <label class="cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-center flex flex-col items-center gap-1.5 hover:border-blue-500 transition has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50 dark:has-[:checked]:bg-blue-900/20">
+                                        <input type="radio" name="theme-mode" value="light" onchange="previewThemeChange()" class="sr-only">
+                                        <i data-lucide="sun" class="w-5 h-5 text-amber-500"></i>
+                                        <span class="text-xs font-semibold">Terang</span>
+                                    </label>
+                                    <label class="cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-center flex flex-col items-center gap-1.5 hover:border-blue-500 transition has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50 dark:has-[:checked]:bg-blue-900/20">
+                                        <input type="radio" name="theme-mode" value="dark" onchange="previewThemeChange()" class="sr-only">
+                                        <i data-lucide="moon" class="w-5 h-5 text-indigo-400"></i>
+                                        <span class="text-xs font-semibold">Gelap</span>
+                                    </label>
+                                    <label class="cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-center flex flex-col items-center gap-1.5 hover:border-blue-500 transition has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50 dark:has-[:checked]:bg-blue-900/20">
+                                        <input type="radio" name="theme-mode" value="auto" onchange="previewThemeChange()" class="sr-only">
+                                        <i data-lucide="monitor" class="w-5 h-5 text-slate-400"></i>
+                                        <span class="text-xs font-semibold">Otomatis</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Pilihan Warna Aksen -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">Warna Aksen</label>
+                                <div class="grid grid-cols-6 gap-2 mb-3">
+                                    <button type="button" onclick="selectAccentColor('blue')" class="accent-preset-btn h-10 rounded-xl bg-blue-600 focus:outline-none ring-2 ring-offset-2 ring-transparent transition" data-color="blue" title="Zynk Blue"></button>
+                                    <button type="button" onclick="selectAccentColor('cyan')" class="accent-preset-btn h-10 rounded-xl bg-cyan-500 focus:outline-none ring-2 ring-offset-2 ring-transparent transition" data-color="cyan" title="Cyan"></button>
+                                    <button type="button" onclick="selectAccentColor('violet')" class="accent-preset-btn h-10 rounded-xl bg-purple-600 focus:outline-none ring-2 ring-offset-2 ring-transparent transition" data-color="violet" title="Violet"></button>
+                                    <button type="button" onclick="selectAccentColor('emerald')" class="accent-preset-btn h-10 rounded-xl bg-emerald-500 focus:outline-none ring-2 ring-offset-2 ring-transparent transition" data-color="emerald" title="Emerald"></button>
+                                    <button type="button" onclick="selectAccentColor('rose')" class="accent-preset-btn h-10 rounded-xl bg-rose-500 focus:outline-none ring-2 ring-offset-2 ring-transparent transition" data-color="rose" title="Rose"></button>
+                                    <button type="button" onclick="selectAccentColor('amber')" class="accent-preset-btn h-10 rounded-xl bg-amber-500 focus:outline-none ring-2 ring-offset-2 ring-transparent transition" data-color="amber" title="Amber"></button>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs text-slate-500">Atau warna custom:</span>
+                                    <input type="color" id="accent-custom-picker" onchange="selectCustomAccent(this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0 p-0 bg-transparent">
+                                    <span id="accent-hex-label" class="font-mono text-xs text-slate-600 dark:text-slate-300 font-semibold">#2563eb</span>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="handleSaveAppearance()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition text-sm flex items-center justify-center gap-2">
+                                <i data-lucide="check-check" class="w-4 h-4"></i> Terapkan & Simpan Tampilan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Preview Panel (Mockup HP Interaktif) -->
+                    <div class="lg:col-span-6 flex flex-col items-center">
+                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                            <i data-lucide="smartphone" class="w-4 h-4"></i> Live Preview Mockup
+                        </div>
+
+                        <!-- Mockup Frame -->
+                        <div id="mockup-frame" class="w-full max-w-[340px] rounded-[36px] p-3 shadow-2xl border-4 border-slate-800 bg-slate-900 transition-all duration-300">
+                            <!-- Speaker / Camera Notch -->
+                            <div class="w-24 h-4 bg-slate-800 rounded-full mx-auto mb-3"></div>
+
+                            <!-- Mockup Screen Content -->
+                            <div id="mockup-screen" class="bg-mesh-light dark:bg-mesh-dark rounded-[24px] p-4 text-slate-800 dark:text-slate-100 min-h-[460px] flex flex-col items-center overflow-hidden text-center">
+                                
+                                <img id="mockup-avatar" src="assets/zynk-badge.svg" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-blue-500 shadow-md object-cover">
+                                <h4 id="mockup-name" class="font-bold text-sm text-slate-900 dark:text-white">Luthafiyyan</h4>
+                                <p id="mockup-bio" class="text-[11px] text-slate-500 dark:text-slate-400 max-w-[220px] mb-3 leading-snug">Personal bio link & showcase.</p>
+
+                                <!-- Mockup Socials -->
+                                <div id="mockup-socials" class="flex gap-1.5 justify-center mb-4">
+                                    <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-[10px]"><i data-lucide="github" class="w-3 h-3"></i></span>
+                                    <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-[10px]"><i data-lucide="instagram" class="w-3 h-3"></i></span>
+                                    <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-[10px]"><i data-lucide="linkedin" class="w-3 h-3"></i></span>
+                                </div>
+
+                                <!-- Mockup Link Buttons -->
+                                <div id="mockup-links" class="w-full space-y-2">
+                                    <div class="glass-card p-2.5 rounded-xl text-left flex items-center gap-2 border border-slate-200 dark:border-slate-700 shadow-sm">
+                                        <div class="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 text-xs font-bold">1</div>
+                                        <div class="min-w-0 flex-1">
+                                            <p class="font-bold text-xs truncate">Tautan Contoh</p>
+                                            <p class="text-[9px] text-slate-400 truncate">Deskripsi ringkas kartu</p>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow">
-                                        <label class="cursor-pointer w-full bg-white px-4 py-2 rounded-lg text-sm border hover:bg-gray-50 transition shadow-sm flex items-center justify-center gap-2">
-                                            <i data-lucide="upload" class="w-4 h-4"></i> Upload
-                                            <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(this)">
-                                        </label>
-                                        <p class="text-[10px] text-gray-500 mt-1 text-center">Max 500KB</p>
+                                    <div class="glass-card p-2.5 rounded-xl text-left flex items-center gap-2 border border-slate-200 dark:border-slate-700 shadow-sm">
+                                        <div class="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 text-xs font-bold">2</div>
+                                        <div class="min-w-0 flex-1">
+                                            <p class="font-bold text-xs truncate">Portfolio Eksperimental</p>
+                                            <p class="text-[9px] text-slate-400 truncate">Koleksi proyek pilihan</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <input type="hidden" id="app-icon-url">
-                            </div>
 
-                            <div>
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">URL Tujuan</label>
-                                <input type="text" id="app-url" required placeholder="https://..." class="w-full mt-1 px-4 py-2 bg-white/50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all">
+                                <div class="mt-auto pt-4 text-[9px] text-slate-400">
+                                    Made with ❤️ by Luthafiyyan
+                                </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="flex gap-2 pt-2">
-                                <button type="submit" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-500/30 transition font-medium">Simpan</button>
-                                <button type="button" onclick="resetForm()" class="px-4 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition font-medium">Batal</button>
-                            </div>
-                        </form>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- TAB 4: STATISTIK & ANALITIK -->
+            <!-- ============================== -->
+            <div id="admin-tab-analytics" class="admin-tab-content hidden space-y-6">
+                
+                <!-- KPI Summary Cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="flex items-center justify-between text-blue-500 mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Kunjungan</span>
+                            <i data-lucide="eye" class="w-5 h-5"></i>
+                        </div>
+                        <div id="stat-total-views" class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">0</div>
+                        <span class="text-[11px] text-slate-400">Page views</span>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="flex items-center justify-between text-emerald-500 mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Klik Tautan</span>
+                            <i data-lucide="mouse-pointer-click" class="w-5 h-5"></i>
+                        </div>
+                        <div id="stat-total-clicks" class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">0</div>
+                        <span class="text-[11px] text-slate-400">Link clicks</span>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="flex items-center justify-between text-purple-500 mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Rata-rata CTR</span>
+                            <i data-lucide="percent" class="w-5 h-5"></i>
+                        </div>
+                        <div id="stat-ctr" class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">0%</div>
+                        <span class="text-[11px] text-slate-400">Click-through rate</span>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="flex items-center justify-between text-amber-500 mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Tautan Teratas</span>
+                            <i data-lucide="award" class="w-5 h-5"></i>
+                        </div>
+                        <div id="stat-top-link" class="text-base font-bold text-slate-900 dark:text-white truncate">-</div>
+                        <span id="stat-top-link-clicks" class="text-[11px] text-slate-400">0 klik</span>
                     </div>
                 </div>
 
-                <!-- Admin List -->
-                <div class="lg:col-span-2 space-y-4" id="admin-app-list">
-                    <!-- List items will be injected here -->
+                <!-- Grafik Tren 7 / 30 Hari -->
+                <div class="glass-card p-6 rounded-3xl">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                        <div>
+                            <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                                <i data-lucide="trending-up" class="w-4 h-4 text-blue-600"></i> Tren Aktivitas Harian
+                            </h3>
+                            <p class="text-xs text-slate-400">Perbandingan jumlah kunjungan halaman dan klik tautan</p>
+                        </div>
+                        <div class="flex gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-semibold">
+                            <button onclick="renderAnalyticsChart(7)" id="btn-chart-7d" class="px-3 py-1 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-white">7 Hari</button>
+                            <button onclick="renderAnalyticsChart(30)" id="btn-chart-30d" class="px-3 py-1 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-white">30 Hari</button>
+                        </div>
+                    </div>
+
+                    <!-- Chart Container SVG -->
+                    <div id="chart-container" class="w-full h-60 flex items-end justify-between gap-2 pt-6 pb-2 overflow-x-auto">
+                        <!-- Bars injected via JS -->
+                    </div>
+                    
+                    <div class="flex items-center justify-center gap-6 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs">
+                        <span class="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+                            <span class="w-3 h-3 rounded bg-blue-500"></span> Kunjungan (Views)
+                        </span>
+                        <span class="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+                            <span class="w-3 h-3 rounded bg-emerald-500"></span> Klik (Clicks)
+                        </span>
+                    </div>
                 </div>
+
+                <!-- Rincian Klik Per Link -->
+                <div class="glass-card p-6 rounded-3xl">
+                    <h3 class="font-bold text-base text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                        <i data-lucide="list" class="w-4 h-4 text-blue-600"></i> Kinerja Setiap Tautan
+                    </h3>
+
+                    <div id="analytics-links-table" class="space-y-3">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
             </div>
-        </div>
+
+        </section>
 
     </main>
 
-    <!-- FOOTER (Fixed Bottom) -->
-    <footer class="fixed bottom-0 w-full py-3 text-center text-gray-600 text-sm glass border-t border-white/40 border-b-0 rounded-none z-50 px-4 md:px-6">
-        <div class="max-w-6xl mx-auto flex justify-center items-center">
-            <p class="flex items-center gap-1 flex-wrap leading-relaxed">
-                Made with <span class="text-red-500 animate-pulse">❤️</span> by 
-                <a href="https://www.instagram.com/luthafiyyan_/" target="_blank" class="text-blue-600 hover:text-indigo-600 font-bold transition-colors hover:underline">Luthafiyyan</a> 
+    <!-- FOOTER (Wajib dipertahankan sesuai instruksi) -->
+    <footer class="fixed bottom-0 w-full py-3 text-center text-slate-600 dark:text-slate-300 text-xs md:text-sm glass-nav border-t border-white/40 dark:border-slate-800 z-30 px-4">
+        <div class="max-w-4xl mx-auto flex justify-center items-center">
+            <p class="flex items-center gap-1 flex-wrap justify-center leading-relaxed font-normal">
+                Made with <span class="text-red-500 animate-pulse" aria-hidden="true">❤️</span> by 
+                <a href="https://www.instagram.com/luthafiyyan_/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-bold transition-colors">Luthafiyyan</a> 
                 <span class="hidden sm:inline mx-1">|</span>
                 <span class="opacity-90">Powered by Caffeine & Good Vibes ☕✨</span>
             </p>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC (FIREBASE V9 CDN) -->
-    <script type="module">
-        // 1. Import Firebase Functions
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push, update, remove, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    <!-- MODAL KONFIRMASI HAPUS -->
+    <div id="delete-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm fade-in">
+        <div class="glass-card p-6 rounded-3xl max-w-sm w-full text-center shadow-2xl border border-white/20">
+            <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-1">Hapus Tautan?</h3>
+            <p id="delete-modal-text" class="text-xs text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">Tautan ini akan dihapus secara permanen dari database.</p>
+            <div class="flex gap-2">
+                <button onclick="confirmDeleteLink()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold transition shadow-md shadow-red-500/20">Ya, Hapus</button>
+                <button onclick="closeDeleteModal()" class="flex-1 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl text-sm font-semibold transition">Batal</button>
+            </div>
+        </div>
+    </div>
 
-        // 2. Firebase Configuration
+    <!-- ======================================================== -->
+    <!-- JAVASCRIPT LOGIC (FIREBASE V9 ESM CDN & MODULAR ENGINE) -->
+    <!-- ======================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getDatabase, ref, onValue, push, update, remove, set 
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { 
+            getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // 1. Firebase & App Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCPiFyAfY-7ryl3vtXjs7z5mGP5oOmEuMo",
             authDomain: "bhavanix-9dcef.firebaseapp.com",
@@ -242,114 +795,1060 @@
             appId: "1:713166116354:web:ddf06c19f50f2811d0b91b"
         };
 
-        // 3. Initialize App
+        const APP_ID = 'bhavanix_production';
+        const ADMIN_EMAIL = 'haf.hafian@gmail.com';
+
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        const APP_ID = 'bhavanix_production'; // Path ID
-        const ADMIN_EMAIL = 'haf.hafian@gmail.com';
-
-        // Global State
+        // 2. State Management
         let currentUser = null;
-        let appsData = [];
-
-        // --- DOM Elements ---
-        const views = {
-            home: document.getElementById('view-home'),
-            login: document.getElementById('view-login'),
-            admin: document.getElementById('view-admin')
+        let linksData = [];
+        let rawAppsData = {};
+        let profileData = {
+            name: "Luthafiyyan",
+            bio: "Personal bio link & showcase proyek terkurasi.",
+            avatarUrl: "assets/zynk-badge.svg",
+            socials: [
+                { type: "github", url: "https://github.com/luthafiyyan" },
+                { type: "instagram", url: "https://www.instagram.com/luthafiyyan_/" },
+                { type: "email", url: "mailto:haf.hafian@gmail.com" }
+            ],
+            theme: "auto",
+            accent: "blue"
         };
-        const authButtonsDiv = document.getElementById('auth-buttons');
-        const appGrid = document.getElementById('app-grid');
-        const adminList = document.getElementById('admin-app-list');
-        const loadingSpinner = document.getElementById('loading-indicator');
-        const emptyState = document.getElementById('empty-state');
+        let statsDailyData = {};
+        let activeCategory = "Semua";
+        let pendingDeleteId = null;
+        let draggedItemId = null;
 
-        // --- Functions ---
+        // Accent Presets Map
+        const ACCENT_COLORS = {
+            blue: { hex: "#2563eb", hover: "#1d4ed8", glow: "rgba(37, 99, 235, 0.35)", light: "rgba(37, 99, 235, 0.12)" },
+            cyan: { hex: "#06b6d4", hover: "#0891b2", glow: "rgba(6, 182, 212, 0.35)", light: "rgba(6, 182, 212, 0.12)" },
+            violet: { hex: "#8b5cf6", hover: "#7c3aed", glow: "rgba(139, 92, 246, 0.35)", light: "rgba(139, 92, 246, 0.12)" },
+            emerald: { hex: "#10b981", hover: "#059669", glow: "rgba(16, 185, 129, 0.35)", light: "rgba(16, 185, 129, 0.12)" },
+            rose: { hex: "#f43f5e", hover: "#e11d48", glow: "rgba(244, 63, 94, 0.35)", light: "rgba(244, 63, 94, 0.12)" },
+            amber: { hex: "#f59e0b", hover: "#d97706", glow: "rgba(245, 158, 11, 0.35)", light: "rgba(245, 158, 11, 0.12)" }
+        };
 
-        // Switch View
-        window.switchView = (viewName) => {
-            Object.values(views).forEach(el => el.classList.add('hidden'));
-            views[viewName].classList.remove('hidden');
-            // Scroll top
+        // Social Platforms Icon Mapping
+        const SOCIAL_ICONS = {
+            instagram: { icon: "instagram", label: "Instagram", placeholder: "https://instagram.com/username" },
+            github: { icon: "github", label: "GitHub", placeholder: "https://github.com/username" },
+            linkedin: { icon: "linkedin", label: "LinkedIn", placeholder: "https://linkedin.com/in/username" },
+            email: { icon: "mail", label: "Email", placeholder: "mailto:nama@email.com" },
+            twitter: { icon: "twitter", label: "X / Twitter", placeholder: "https://x.com/username" },
+            whatsapp: { icon: "phone", label: "WhatsApp", placeholder: "https://wa.me/628..." },
+            youtube: { icon: "youtube", label: "YouTube", placeholder: "https://youtube.com/@channel" },
+            website: { icon: "globe", label: "Website", placeholder: "https://..." }
+        };
+
+        // 3. Sanitasi Input Sederhana (Cegah XSS)
+        function sanitizeText(str) {
+            if (!str) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // 4. Client-side Image Compression via Canvas (±256x256 px)
+        function compressImageToDataUrl(file, maxDimension = 256, quality = 0.85) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement("canvas");
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > maxDimension) {
+                                height = Math.round((height * maxDimension) / width);
+                                width = maxDimension;
+                            }
+                        } else {
+                            if (height > maxDimension) {
+                                width = Math.round((width * maxDimension) / height);
+                                height = maxDimension;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL("image/jpeg", quality));
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // 5. Tampilan Tema & Warna Aksen
+        function applyAccent(colorKeyOrHex) {
+            let config = ACCENT_COLORS[colorKeyOrHex];
+            if (!config) {
+                // Custom Hex
+                config = {
+                    hex: colorKeyOrHex,
+                    hover: colorKeyOrHex,
+                    glow: `${colorKeyOrHex}55`,
+                    light: `${colorKeyOrHex}22`
+                };
+            }
+            document.documentElement.style.setProperty('--accent-color', config.hex);
+            document.documentElement.style.setProperty('--accent-hover', config.hover);
+            document.documentElement.style.setProperty('--accent-glow', config.glow);
+            document.documentElement.style.setProperty('--accent-light', config.light);
+
+            const hexLabel = document.getElementById('accent-hex-label');
+            if (hexLabel) hexLabel.textContent = config.hex;
+        }
+
+        function applyTheme(themeMode) {
+            const root = document.documentElement;
+            if (themeMode === 'dark') {
+                root.classList.add('dark');
+            } else if (themeMode === 'light') {
+                root.classList.remove('dark');
+            } else {
+                // Auto / Sistem
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    root.classList.add('dark');
+                } else {
+                    root.classList.remove('dark');
+                }
+            }
+            if (window.lucide) lucide.createIcons();
+        }
+
+        window.toggleThemeManual = () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            applyTheme(isDark ? 'light' : 'dark');
+        };
+
+        // 6. Navigasi Tampilan (SPA)
+        window.navigateTo = (viewName) => {
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-login').classList.add('hidden');
+            document.getElementById('view-admin').classList.add('hidden');
+
+            if (viewName === 'admin') {
+                if (currentUser && currentUser.email === ADMIN_EMAIL) {
+                    document.getElementById('view-admin').classList.remove('hidden');
+                    window.history.replaceState(null, '', '#admin');
+                } else {
+                    document.getElementById('view-login').classList.remove('hidden');
+                    window.history.replaceState(null, '', '#login');
+                }
+            } else if (viewName === 'login') {
+                document.getElementById('view-login').classList.remove('hidden');
+                window.history.replaceState(null, '', '#login');
+            } else {
+                document.getElementById('view-home').classList.remove('hidden');
+                window.history.replaceState(null, '', '#home');
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            lucide.createIcons();
+            if (window.lucide) lucide.createIcons();
         };
 
-        // Render Auth Button
+        // 7. Render Auth Button di Navbar
         function renderAuthButton() {
+            const authDiv = document.getElementById('auth-buttons');
+            if (!authDiv) return;
+
             if (currentUser && currentUser.email === ADMIN_EMAIL) {
-                authButtonsDiv.innerHTML = `
-                    <button onclick="switchView('admin')" class="p-2 text-gray-600 hover:bg-white/50 hover:text-blue-600 rounded-lg transition shadow-sm border border-transparent hover:border-white/50" title="Admin Dashboard">
-                        <i data-lucide="settings" class="w-5 h-5 md:w-6 md:h-6"></i>
+                authDiv.innerHTML = `
+                    <button onclick="navigateTo('admin')" class="p-2 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-xl transition shadow-sm border border-blue-200 dark:border-blue-800" title="Dashboard Admin" aria-label="Dashboard Admin">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
                     </button>
                 `;
             } else {
-                authButtonsDiv.innerHTML = `
-                    <button onclick="switchView('login')" class="p-2 text-gray-500 hover:bg-white/50 hover:text-gray-900 rounded-lg transition" title="Login Admin">
-                        <i data-lucide="settings" class="w-5 h-5 md:w-6 md:h-6"></i>
+                authDiv.innerHTML = `
+                    <button onclick="navigateTo('admin')" class="p-2 text-slate-500 hover:text-slate-900 dark:hover:text-white rounded-xl transition" title="Login Admin" aria-label="Login Admin">
+                        <i data-lucide="lock" class="w-5 h-5"></i>
                     </button>
                 `;
             }
-            lucide.createIcons();
+            if (window.lucide) lucide.createIcons();
         }
 
-        // Render App Cards (Home)
-        function renderApps() {
-            appGrid.innerHTML = '';
-            adminList.innerHTML = '';
+        // 8. Render Halaman Publik
+        function renderPublicView() {
+            // Profil Header
+            document.getElementById('pub-avatar').src = profileData.avatarUrl || 'assets/zynk-badge.svg';
+            document.getElementById('pub-name').firstElementChild.textContent = profileData.name || 'Luthafiyyan';
+            document.getElementById('pub-bio').textContent = profileData.bio || '';
 
-            if (appsData.length === 0) {
+            // Update SEO Metadata Dinamis
+            document.title = `${profileData.name || 'Zynk'} — Personal Bio Link`;
+            const ogTitle = document.getElementById('og-title');
+            if (ogTitle) ogTitle.content = `${profileData.name || 'Zynk'} — Bio Link`;
+            const ogDesc = document.getElementById('og-desc');
+            if (ogDesc) ogDesc.content = profileData.bio || 'Personal Bio Link';
+            const ogImage = document.getElementById('og-image');
+            if (ogImage && profileData.avatarUrl) ogImage.content = profileData.avatarUrl;
+
+            // Render Social Icons
+            const socialsContainer = document.getElementById('pub-socials');
+            socialsContainer.innerHTML = '';
+            if (Array.isArray(profileData.socials)) {
+                profileData.socials.forEach(s => {
+                    if (!s.url) return;
+                    const meta = SOCIAL_ICONS[s.type] || { icon: "link", label: s.type || "Link" };
+                    const a = document.createElement('a');
+                    a.href = s.url;
+                    a.target = "_blank";
+                    a.rel = "noopener noreferrer";
+                    a.className = "w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-slate-700 dark:text-slate-200 hover:text-white hover:bg-accent transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md";
+                    a.setAttribute('aria-label', meta.label);
+                    a.title = meta.label;
+                    a.innerHTML = `<i data-lucide="${meta.icon}" class="w-4 h-4"></i>`;
+                    socialsContainer.appendChild(a);
+                });
+            }
+
+            // Extract Categories from active links
+            const activeLinks = linksData.filter(l => l.isActive);
+            const categoriesSet = new Set(["Semua"]);
+            activeLinks.forEach(l => {
+                if (l.category && l.category.trim()) categoriesSet.add(l.category.trim());
+            });
+
+            // Render Category Filter Pills
+            const pillsContainer = document.getElementById('category-pills');
+            pillsContainer.innerHTML = '';
+            categoriesSet.forEach(cat => {
+                const btn = document.createElement('button');
+                const isSelected = activeCategory === cat;
+                btn.className = isSelected 
+                    ? "px-4 py-1.5 rounded-full text-xs font-bold bg-accent text-white shadow-md shadow-accent transition whitespace-nowrap"
+                    : "px-4 py-1.5 rounded-full text-xs font-semibold bg-white/70 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition whitespace-nowrap border border-slate-200/50 dark:border-slate-700/50";
+                btn.textContent = cat;
+                btn.onclick = () => {
+                    activeCategory = cat;
+                    renderPublicView();
+                };
+                pillsContainer.appendChild(btn);
+            });
+
+            // Filter links
+            const displayedLinks = activeLinks.filter(l => {
+                if (activeCategory === "Semua") return true;
+                return l.category === activeCategory;
+            });
+
+            // Sort by position ascending
+            displayedLinks.sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
+
+            const container = document.getElementById('links-container');
+            const emptyState = document.getElementById('empty-state');
+            container.innerHTML = '';
+
+            if (displayedLinks.length === 0) {
                 emptyState.classList.remove('hidden');
             } else {
                 emptyState.classList.add('hidden');
-                
-                appsData.forEach(item => {
-                    // Public Card
-                    const card = document.createElement('div');
-                    card.className = "glass rounded-3xl p-6 group hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 flex flex-col h-full bg-white/40";
-                    card.innerHTML = `
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-16 h-16 bg-white rounded-2xl shadow-sm overflow-hidden p-1 flex-shrink-0">
-                                <img src="${item.iconUrl || 'https://placehold.co/100x100?text=App'}" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/100x100?text=Error'">
-                            </div>
-                            <span class="bg-white/60 backdrop-blur-sm text-[10px] font-bold px-3 py-1 rounded-full text-gray-600 uppercase tracking-wider border border-white/50 ml-2 text-center max-w-[120px] truncate">${item.category || 'App'}</span>
-                        </div>
-                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors line-clamp-1" title="${item.name}">${item.name}</h3>
-                        <p class="text-gray-600 mb-6 line-clamp-3 flex-grow text-sm leading-relaxed">${item.description}</p>
-                        <a href="${item.url}" target="_blank" class="mt-auto w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium shadow-lg shadow-blue-500/30 active:scale-95 transition-all flex items-center justify-center gap-2 group-hover:shadow-blue-600/40">
-                            Buka Aplikasi <i data-lucide="external-link" class="w-4 h-4"></i>
-                        </a>
-                    `;
-                    appGrid.appendChild(card);
 
-                    // Admin List Item
-                    const listItem = document.createElement('div');
-                    listItem.className = "glass p-4 rounded-2xl flex items-center gap-4 hover:bg-white/60 transition group bg-white/40";
-                    listItem.innerHTML = `
-                        <img src="${item.iconUrl || 'https://placehold.co/50'}" class="w-12 h-12 rounded-lg bg-gray-200 object-cover flex-shrink-0 shadow-sm">
-                        <div class="flex-grow min-w-0">
-                            <h4 class="font-bold text-gray-900 truncate text-sm md:text-base">${item.name}</h4>
-                            <p class="text-xs text-gray-500 truncate">${item.category}</p>
+                displayedLinks.forEach(link => {
+                    const card = document.createElement('a');
+                    // Target redirect endpoint /api/go?id=...
+                    card.href = `/api/go?id=${encodeURIComponent(link.id)}`;
+                    card.target = "_blank";
+                    card.rel = "noopener noreferrer";
+                    card.className = "link-card glass-card rounded-2xl p-4 md:p-5 flex items-center gap-4 w-full group relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500";
+                    
+                    // Client fallback click tracking: jika /api/go tidak berjalan (mis. local server), tetap catat klik
+                    card.onclick = (e) => {
+                        recordLinkClick(link.id, link.url);
+                    };
+
+                    const iconHtml = link.icon 
+                        ? `<img src="${link.icon}" alt="" class="w-full h-full object-cover rounded-xl" onerror="this.src='assets/zynk-icon.svg'">`
+                        : `<span class="font-extrabold text-blue-600 text-base">${sanitizeText(link.title).charAt(0).toUpperCase()}</span>`;
+
+                    card.innerHTML = `
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white dark:bg-slate-800 p-1 shadow-sm shrink-0 flex items-center justify-center border border-slate-200/60 dark:border-slate-700/60 group-hover:border-accent transition-colors">
+                            ${iconHtml}
                         </div>
-                        <div class="flex gap-2 flex-shrink-0">
-                            <button onclick="triggerEdit('${item.id}')" class="p-2 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition" title="Edit"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                            <button onclick="deleteApp('${item.id}')" class="p-2 text-red-500 bg-red-50 hover:bg-red-100 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        <div class="flex-grow min-w-0 pr-2">
+                            <div class="flex items-center gap-2 mb-0.5">
+                                <h3 class="font-bold text-sm md:text-base text-slate-900 dark:text-white truncate group-hover:text-accent transition-colors">
+                                    ${sanitizeText(link.title)}
+                                </h3>
+                                ${link.category ? `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 shrink-0">${sanitizeText(link.category)}</span>` : ''}
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                                ${sanitizeText(link.description || '')}
+                            </p>
+                        </div>
+                        <div class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-accent group-hover:text-white text-slate-400 flex items-center justify-center shrink-0 transition-all duration-200">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
                         </div>
                     `;
-                    adminList.appendChild(listItem);
+                    container.appendChild(card);
                 });
             }
-            lucide.createIcons();
+
+            // Hide skeleton
+            document.getElementById('loading-skeleton').classList.add('hidden');
+            if (window.lucide) lucide.createIcons();
         }
 
-        // --- AUTH LOGIC ---
+        // 9. Client Click Tracking Fallback
+        async function recordLinkClick(linkId, fallbackUrl) {
+            try {
+                const todayStr = new Date().toISOString().split('T')[0];
+                const linkRef = ref(db, `artifacts/${APP_ID}/public/data/links/${linkId}`);
+                const current = linksData.find(l => l.id === linkId);
+                const count = (current && current.clickCount) ? Number(current.clickCount) + 1 : 1;
+
+                // Update count in RTDB
+                update(linkRef, { clickCount: count }).catch(() => {});
+
+                // Update stats_daily
+                const statsRef = ref(db, `artifacts/${APP_ID}/public/data/stats_daily/${todayStr}`);
+                const todayStats = statsDailyData[todayStr] || { clicks: 0, views: 0 };
+                update(statsRef, {
+                    date: todayStr,
+                    clicks: (todayStats.clicks || 0) + 1,
+                    [`linkClicks/${linkId}`]: ((todayStats.linkClicks && todayStats.linkClicks[linkId]) || 0) + 1
+                }).catch(() => {});
+            } catch (err) {
+                // Non-blocking
+            }
+        }
+
+        // 10. Record Page Visit
+        async function recordPageVisit() {
+            try {
+                // Panggil serverless endpoint /api/visit jika tersedia di Vercel
+                fetch('/api/visit', { method: 'POST' }).catch(() => {});
+            } catch (err) {
+                // Non-blocking
+            }
+        }
+
+        // 11. Render Dashboard Admin
+        function renderAdminView() {
+            // User info display
+            if (currentUser) {
+                document.getElementById('admin-user-info').textContent = currentUser.email;
+            }
+
+            // Badge count
+            document.getElementById('admin-badge-count').textContent = linksData.length;
+
+            // Sort links by position
+            const sortedLinks = [...linksData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
+
+            // Populate category suggestions
+            const catDatalist = document.getElementById('category-suggestions');
+            catDatalist.innerHTML = '';
+            const cats = new Set(linksData.map(l => l.category).filter(Boolean));
+            cats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c;
+                catDatalist.appendChild(opt);
+            });
+
+            // Render Links List in Tab 1
+            const listContainer = document.getElementById('admin-links-list');
+            const emptyNotice = document.getElementById('admin-links-empty');
+            listContainer.innerHTML = '';
+
+            if (sortedLinks.length === 0) {
+                emptyNotice.classList.remove('hidden');
+            } else {
+                emptyNotice.classList.add('hidden');
+
+                sortedLinks.forEach((item, index) => {
+                    const row = document.createElement('div');
+                    row.className = "glass-card p-3.5 rounded-2xl flex items-center gap-3 group hover:border-blue-400 transition";
+                    row.draggable = true;
+                    row.dataset.id = item.id;
+
+                    // Drag and Drop Events
+                    row.ondragstart = (e) => {
+                        draggedItemId = item.id;
+                        row.classList.add('opacity-40');
+                        e.dataTransfer.effectAllowed = 'move';
+                    };
+                    row.ondragend = () => {
+                        row.classList.remove('opacity-40');
+                    };
+                    row.ondragover = (e) => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                    };
+                    row.ondrop = (e) => {
+                        e.preventDefault();
+                        if (draggedItemId && draggedItemId !== item.id) {
+                            handleReorderLinks(draggedItemId, item.id);
+                        }
+                    };
+
+                    const iconSrc = item.icon || 'assets/zynk-icon.svg';
+
+                    row.innerHTML = `
+                        <!-- Drag Handle -->
+                        <div class="cursor-grab text-slate-300 hover:text-slate-600 dark:hover:text-slate-200 shrink-0 p-1" title="Geser untuk mengubah urutan">
+                            <i data-lucide="grip-vertical" class="w-4 h-4"></i>
+                        </div>
+
+                        <!-- Icon Preview -->
+                        <div class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 p-1 border shrink-0 flex items-center justify-center overflow-hidden">
+                            <img src="${iconSrc}" class="w-full h-full object-cover rounded-lg" onerror="this.src='assets/zynk-icon.svg'">
+                        </div>
+
+                        <!-- Title & URL -->
+                        <div class="flex-grow min-w-0">
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white truncate">${sanitizeText(item.title)}</h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full ${item.isActive ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 'bg-slate-100 text-slate-500 dark:bg-slate-800'} font-semibold shrink-0">
+                                    ${item.isActive ? 'Aktif' : 'Nonaktif'}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-3 text-xs text-slate-400 truncate mt-0.5">
+                                <span class="truncate max-w-[160px] sm:max-w-xs">${sanitizeText(item.url)}</span>
+                                <span class="flex items-center gap-1 shrink-0 font-medium text-slate-500">
+                                    <i data-lucide="mouse-pointer" class="w-3 h-3"></i> ${item.clickCount || 0} klik
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <!-- Naik/Turun Button (Sangat ramah mobile) -->
+                            <button type="button" onclick="moveLinkPosition('${item.id}', -1)" ${index === 0 ? 'disabled class="opacity-20 p-1.5"' : 'class="p-1.5 text-slate-500 hover:text-blue-600 transition"'} title="Naikkan posisi">
+                                <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                            </button>
+                            <button type="button" onclick="moveLinkPosition('${item.id}', 1)" ${index === sortedLinks.length - 1 ? 'disabled class="opacity-20 p-1.5"' : 'class="p-1.5 text-slate-500 hover:text-blue-600 transition"'} title="Turunkan posisi">
+                                <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                            </button>
+                            
+                            <!-- Toggle Active -->
+                            <button type="button" onclick="toggleLinkActive('${item.id}', ${!item.isActive})" class="p-1.5 ${item.isActive ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50' : 'text-slate-400 bg-slate-100 dark:bg-slate-800'} rounded-lg transition" title="${item.isActive ? 'Klik untuk nonaktifkan' : 'Klik untuk aktifkan'}">
+                                <i data-lucide="${item.isActive ? 'eye' : 'eye-off'}" class="w-4 h-4"></i>
+                            </button>
+
+                            <!-- Edit -->
+                            <button type="button" onclick="editLink('${item.id}')" class="p-1.5 text-blue-600 bg-blue-50 dark:bg-blue-900/40 rounded-lg hover:bg-blue-100 transition" title="Edit">
+                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                            </button>
+
+                            <!-- Delete -->
+                            <button type="button" onclick="promptDeleteLink('${item.id}', '${sanitizeText(item.title)}')" class="p-1.5 text-red-500 bg-red-50 dark:bg-red-900/40 rounded-lg hover:bg-red-100 transition" title="Hapus">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    `;
+                    listContainer.appendChild(row);
+                });
+            }
+
+            // Populate Tab 2: Profil
+            document.getElementById('profile-name').value = profileData.name || '';
+            document.getElementById('profile-bio').value = profileData.bio || '';
+            document.getElementById('profile-avatar-url').value = profileData.avatarUrl || '';
+            document.getElementById('profile-avatar-preview').src = profileData.avatarUrl || 'assets/zynk-badge.svg';
+            renderSocialsEditor();
+
+            // Populate Tab 3: Tampilan
+            const currentTheme = profileData.theme || 'auto';
+            const themeRadio = document.querySelector(`input[name="theme-mode"][value="${currentTheme}"]`);
+            if (themeRadio) themeRadio.checked = true;
+
+            updateMockupPreview();
+
+            // Populate Tab 4: Statistik
+            renderAnalyticsView();
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        // 12. CRUD Tautan
+        window.handleSaveLink = async (e) => {
+            e.preventDefault();
+            if (!currentUser || currentUser.email !== ADMIN_EMAIL) {
+                alert("Akses ditolak: Anda harus login sebagai admin!");
+                return;
+            }
+
+            const id = document.getElementById('link-id').value;
+            const title = document.getElementById('link-title').value.trim();
+            const url = document.getElementById('link-url').value.trim();
+            const description = document.getElementById('link-desc').value.trim();
+            const category = document.getElementById('link-category').value.trim() || 'General';
+            const icon = document.getElementById('link-icon-data').value;
+            const isActive = document.getElementById('link-is-active').checked;
+            const positionVal = document.getElementById('link-position').value;
+
+            // Validasi URL
+            try {
+                const parsed = new URL(url);
+                if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+                    alert("URL harus menggunakan protokol http:// atau https://");
+                    return;
+                }
+            } catch {
+                alert("Format URL tidak valid!");
+                return;
+            }
+
+            const now = new Date().toISOString();
+
+            try {
+                if (id) {
+                    // Update
+                    const payload = {
+                        title, url, description, category, icon, isActive,
+                        updatedAt: now
+                    };
+                    await update(ref(db, `artifacts/${APP_ID}/public/data/links/${id}`), payload);
+                } else {
+                    // Create New
+                    const nextPosition = linksData.length;
+                    const payload = {
+                        title, url, description, category, icon, isActive,
+                        position: nextPosition,
+                        clickCount: 0,
+                        createdAt: now,
+                        updatedAt: now,
+                        ownerId: null
+                    };
+                    await set(push(ref(db, `artifacts/${APP_ID}/public/data/links`)), payload);
+                }
+                resetLinkForm();
+            } catch (err) {
+                alert("Gagal menyimpan tautan: " + err.message);
+            }
+        };
+
+        window.editLink = (id) => {
+            const link = linksData.find(l => l.id === id);
+            if (!link) return;
+
+            document.getElementById('link-id').value = link.id;
+            document.getElementById('link-title').value = link.title || '';
+            document.getElementById('link-url').value = link.url || '';
+            document.getElementById('link-desc').value = link.description || '';
+            document.getElementById('link-category').value = link.category || '';
+            document.getElementById('link-icon-data').value = link.icon || '';
+            document.getElementById('link-icon-preview').src = link.icon || 'assets/zynk-icon.svg';
+            document.getElementById('link-is-active').checked = link.isActive !== false;
+            document.getElementById('link-position').value = link.position ?? 0;
+
+            document.getElementById('link-form-title').innerHTML = `
+                <i data-lucide="edit-3" class="w-5 h-5 text-blue-600"></i> Edit Tautan
+            `;
+            document.getElementById('btn-cancel-edit').classList.remove('hidden');
+            document.getElementById('btn-save-link').innerHTML = `
+                <i data-lucide="check" class="w-4 h-4"></i> Perbarui Tautan
+            `;
+
+            window.scrollTo({ top: document.getElementById('link-form').offsetTop - 80, behavior: 'smooth' });
+            if (window.lucide) lucide.createIcons();
+        };
+
+        window.resetLinkForm = () => {
+            document.getElementById('link-form').reset();
+            document.getElementById('link-id').value = "";
+            document.getElementById('link-icon-data').value = "";
+            document.getElementById('link-icon-preview').src = "assets/zynk-icon.svg";
+            document.getElementById('link-is-active').checked = true;
+            document.getElementById('link-position').value = "";
+            document.getElementById('link-form-title').innerHTML = `
+                <i data-lucide="plus-circle" class="w-5 h-5 text-blue-600"></i> Tambah Tautan
+            `;
+            document.getElementById('btn-cancel-edit').classList.add('hidden');
+            document.getElementById('btn-save-link').innerHTML = `
+                <i data-lucide="check" class="w-4 h-4"></i> Simpan Tautan
+            `;
+            if (window.lucide) lucide.createIcons();
+        };
+
+        window.toggleLinkActive = async (id, newActiveStatus) => {
+            try {
+                await update(ref(db, `artifacts/${APP_ID}/public/data/links/${id}`), {
+                    isActive: newActiveStatus,
+                    updatedAt: new Date().toISOString()
+                });
+            } catch (err) {
+                alert("Gagal memperbarui status: " + err.message);
+            }
+        };
+
+        window.promptDeleteLink = (id, title) => {
+            pendingDeleteId = id;
+            document.getElementById('delete-modal-text').textContent = `Yakin ingin menghapus tautan "${title}"?`;
+            document.getElementById('delete-modal').classList.remove('hidden');
+            if (window.lucide) lucide.createIcons();
+        };
+
+        window.closeDeleteModal = () => {
+            pendingDeleteId = null;
+            document.getElementById('delete-modal').classList.add('hidden');
+        };
+
+        window.confirmDeleteLink = async () => {
+            if (!pendingDeleteId) return;
+            try {
+                await remove(ref(db, `artifacts/${APP_ID}/public/data/links/${pendingDeleteId}`));
+                closeDeleteModal();
+            } catch (err) {
+                alert("Gagal menghapus tautan: " + err.message);
+            }
+        };
+
+        window.handleLinkIconUpload = async (input) => {
+            const file = input.files[0];
+            if (!file) return;
+            if (file.size > 500 * 1024) {
+                alert("Ukuran gambar melebihi 500KB!");
+                return;
+            }
+            try {
+                const compressed = await compressImageToDataUrl(file, 160, 0.85);
+                document.getElementById('link-icon-data').value = compressed;
+                document.getElementById('link-icon-preview').src = compressed;
+            } catch (err) {
+                alert("Gagal memproses gambar: " + err.message);
+            }
+        };
+
+        window.clearLinkIcon = () => {
+            document.getElementById('link-icon-data').value = "";
+            document.getElementById('link-icon-preview').src = "assets/zynk-icon.svg";
+        };
+
+        // 13. Reorder Logic (Drag-and-Drop & Panah Naik/Turun)
+        window.moveLinkPosition = async (id, delta) => {
+            const sorted = [...linksData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
+            const currentIndex = sorted.findIndex(l => l.id === id);
+            if (currentIndex === -1) return;
+            const newIndex = currentIndex + delta;
+            if (newIndex < 0 || newIndex >= sorted.length) return;
+
+            // Swap positions
+            const targetItem = sorted[newIndex];
+            const updates = {};
+            updates[`artifacts/${APP_ID}/public/data/links/${id}/position`] = newIndex;
+            updates[`artifacts/${APP_ID}/public/data/links/${targetItem.id}/position`] = currentIndex;
+
+            try {
+                await update(ref(db), updates);
+            } catch (err) {
+                alert("Gagal mengubah urutan: " + err.message);
+            }
+        };
+
+        function handleReorderLinks(draggedId, targetId) {
+            const sorted = [...linksData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
+            const draggedIdx = sorted.findIndex(l => l.id === draggedId);
+            const targetIdx = sorted.findIndex(l => l.id === targetId);
+            if (draggedIdx === -1 || targetIdx === -1) return;
+
+            // Reorder array
+            const [moved] = sorted.splice(draggedIdx, 1);
+            sorted.splice(targetIdx, 0, moved);
+
+            const updates = {};
+            sorted.forEach((item, idx) => {
+                updates[`artifacts/${APP_ID}/public/data/links/${item.id}/position`] = idx;
+            });
+
+            update(ref(db), updates).catch(err => alert("Gagal menyimpan urutan: " + err.message));
+        }
+
+        // 14. Tab 2: Profil & Sosial Editor
+        function renderSocialsEditor() {
+            const container = document.getElementById('socials-list');
+            container.innerHTML = '';
+
+            const socials = profileData.socials || [];
+            socials.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center gap-2 p-2 bg-white/60 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700";
+
+                const optionsHtml = Object.keys(SOCIAL_ICONS).map(k => `
+                    <option value="${k}" ${item.type === k ? 'selected' : ''}>${SOCIAL_ICONS[k].label}</option>
+                `).join('');
+
+                row.innerHTML = `
+                    <select onchange="updateSocialItem(${index}, 'type', this.value)" class="text-xs font-semibold px-2.5 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg outline-none">
+                        ${optionsHtml}
+                    </select>
+                    <input type="text" value="${sanitizeText(item.url)}" onchange="updateSocialItem(${index}, 'url', this.value)" placeholder="${(SOCIAL_ICONS[item.type] && SOCIAL_ICONS[item.type].placeholder) || 'https://...'}" class="flex-grow text-xs px-3 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg outline-none">
+                    <button type="button" onclick="removeSocialItem(${index})" class="p-1.5 text-slate-400 hover:text-red-500 rounded-lg" title="Hapus">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                `;
+                container.appendChild(row);
+            });
+            if (window.lucide) lucide.createIcons();
+        }
+
+        window.addSocialItem = () => {
+            if (!profileData.socials) profileData.socials = [];
+            profileData.socials.push({ type: "instagram", url: "" });
+            renderSocialsEditor();
+            updateMockupPreview();
+        };
+
+        window.updateSocialItem = (index, field, val) => {
+            if (profileData.socials && profileData.socials[index]) {
+                profileData.socials[index][field] = val;
+                updateMockupPreview();
+            }
+        };
+
+        window.removeSocialItem = (index) => {
+            if (profileData.socials) {
+                profileData.socials.splice(index, 1);
+                renderSocialsEditor();
+                updateMockupPreview();
+            }
+        };
+
+        window.handleProfileAvatarUpload = async (input) => {
+            const file = input.files[0];
+            if (!file) return;
+            if (file.size > 500 * 1024) {
+                alert("Ukuran gambar melebihi 500KB!");
+                return;
+            }
+            try {
+                const compressed = await compressImageToDataUrl(file, 256, 0.85);
+                document.getElementById('profile-avatar-url').value = compressed;
+                document.getElementById('profile-avatar-preview').src = compressed;
+                profileData.avatarUrl = compressed;
+                updateMockupPreview();
+            } catch (err) {
+                alert("Gagal memproses gambar avatar: " + err.message);
+            }
+        };
+
+        window.handleSaveProfile = async (e) => {
+            e.preventDefault();
+            if (!currentUser || currentUser.email !== ADMIN_EMAIL) return;
+
+            const name = document.getElementById('profile-name').value.trim();
+            const bio = document.getElementById('profile-bio').value.trim();
+            const avatarUrl = document.getElementById('profile-avatar-url').value || profileData.avatarUrl;
+            const socials = profileData.socials || [];
+
+            try {
+                await update(ref(db, `artifacts/${APP_ID}/public/data/profile`), {
+                    name, bio, avatarUrl, socials,
+                    updatedAt: new Date().toISOString()
+                });
+                alert("Profil berhasil diperbarui!");
+            } catch (err) {
+                alert("Gagal menyimpan profil: " + err.message);
+            }
+        };
+
+        // 15. Tab 3: Tampilan & Mockup Live Preview
+        window.switchAdminTab = (tabName) => {
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'bg-blue-50/50', 'dark:bg-blue-900/20');
+                btn.classList.add('border-transparent', 'text-slate-600', 'dark:text-slate-400');
+            });
+
+            const content = document.getElementById(`admin-tab-${tabName}`);
+            const btn = document.getElementById(`tab-btn-${tabName}`);
+            if (content) content.classList.remove('hidden');
+            if (btn) {
+                btn.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'bg-blue-50/50', 'dark:bg-blue-900/20');
+                btn.classList.remove('border-transparent', 'text-slate-600', 'dark:text-slate-400');
+            }
+            if (tabName === 'appearance') updateMockupPreview();
+            if (tabName === 'analytics') renderAnalyticsView();
+            if (window.lucide) lucide.createIcons();
+        };
+
+        window.selectAccentColor = (colorKey) => {
+            profileData.accent = colorKey;
+            applyAccent(colorKey);
+            updateMockupPreview();
+        };
+
+        window.selectCustomAccent = (hex) => {
+            profileData.accent = hex;
+            applyAccent(hex);
+            updateMockupPreview();
+        };
+
+        window.previewThemeChange = () => {
+            const selected = document.querySelector('input[name="theme-mode"]:checked');
+            if (selected) {
+                profileData.theme = selected.value;
+                applyTheme(selected.value);
+                updateMockupPreview();
+            }
+        };
+
+        window.handleSaveAppearance = async () => {
+            if (!currentUser || currentUser.email !== ADMIN_EMAIL) return;
+            try {
+                await update(ref(db, `artifacts/${APP_ID}/public/data/profile`), {
+                    theme: profileData.theme || 'auto',
+                    accent: profileData.accent || 'blue',
+                    updatedAt: new Date().toISOString()
+                });
+                alert("Tampilan & tema berhasil disimpan!");
+            } catch (err) {
+                alert("Gagal menyimpan tampilan: " + err.message);
+            }
+        };
+
+        function updateMockupPreview() {
+            const mAvatar = document.getElementById('mockup-avatar');
+            const mName = document.getElementById('mockup-name');
+            const mBio = document.getElementById('mockup-bio');
+            const mSocials = document.getElementById('mockup-socials');
+            const mLinks = document.getElementById('mockup-links');
+
+            if (mAvatar) mAvatar.src = profileData.avatarUrl || 'assets/zynk-badge.svg';
+            if (mName) mName.textContent = profileData.name || 'Luthafiyyan';
+            if (mBio) mBio.textContent = profileData.bio || 'Personal bio link & showcase.';
+
+            if (mSocials) {
+                mSocials.innerHTML = '';
+                (profileData.socials || []).slice(0, 5).forEach(s => {
+                    const iconMeta = SOCIAL_ICONS[s.type] || { icon: 'link' };
+                    const span = document.createElement('span');
+                    span.className = "w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-[10px] text-slate-700 dark:text-slate-300";
+                    span.innerHTML = `<i data-lucide="${iconMeta.icon}" class="w-3 h-3"></i>`;
+                    mSocials.appendChild(span);
+                });
+            }
+
+            if (mLinks) {
+                mLinks.innerHTML = '';
+                const active = linksData.filter(l => l.isActive).slice(0, 3);
+                if (active.length === 0) {
+                    mLinks.innerHTML = `<div class="text-[10px] text-slate-400 py-3">Belum ada link aktif</div>`;
+                } else {
+                    active.forEach((l, idx) => {
+                        const div = document.createElement('div');
+                        div.className = "glass-card p-2 rounded-xl text-left flex items-center gap-2 border border-slate-200 dark:border-slate-700 shadow-sm";
+                        div.innerHTML = `
+                            <div class="w-6 h-6 rounded-lg bg-accent text-white flex items-center justify-center text-[10px] font-bold shrink-0">${idx + 1}</div>
+                            <div class="min-w-0 flex-1">
+                                <p class="font-bold text-[11px] truncate text-slate-900 dark:text-white">${sanitizeText(l.title)}</p>
+                                <p class="text-[9px] text-slate-400 truncate">${sanitizeText(l.description || '')}</p>
+                            </div>
+                        `;
+                        mLinks.appendChild(div);
+                    });
+                }
+            }
+            if (window.lucide) lucide.createIcons();
+        }
+
+        // 16. Tab 4: Statistik & Analitik
+        function renderAnalyticsView() {
+            let totalViews = 0;
+            let totalClicks = 0;
+
+            Object.values(statsDailyData).forEach(day => {
+                if (day.views) totalViews += Number(day.views);
+                if (day.clicks) totalClicks += Number(day.clicks);
+            });
+
+            // Fallback total clicks dari sum seluruh link clickCount jika stats_daily masih baru
+            const linksClicksSum = linksData.reduce((acc, l) => acc + (Number(l.clickCount) || 0), 0);
+            if (totalClicks < linksClicksSum) totalClicks = linksClicksSum;
+
+            document.getElementById('stat-total-views').textContent = totalViews.toLocaleString('id-ID');
+            document.getElementById('stat-total-clicks').textContent = totalClicks.toLocaleString('id-ID');
+
+            const ctr = totalViews > 0 ? ((totalClicks / totalViews) * 100).toFixed(1) : "0.0";
+            document.getElementById('stat-ctr').textContent = `${ctr}%`;
+
+            // Top Link
+            const sortedByClicks = [...linksData].sort((a, b) => (Number(b.clickCount) || 0) - (Number(a.clickCount) || 0));
+            if (sortedByClicks.length > 0 && Number(sortedByClicks[0].clickCount) > 0) {
+                document.getElementById('stat-top-link').textContent = sortedByClicks[0].title;
+                document.getElementById('stat-top-link-clicks').textContent = `${sortedByClicks[0].clickCount} klik`;
+            } else {
+                document.getElementById('stat-top-link').textContent = "-";
+                document.getElementById('stat-top-link-clicks').textContent = "0 klik";
+            }
+
+            renderAnalyticsChart(7);
+            renderLinksPerformanceTable(sortedByClicks, totalClicks);
+        }
+
+        window.renderAnalyticsChart = (days = 7) => {
+            const btn7 = document.getElementById('btn-chart-7d');
+            const btn30 = document.getElementById('btn-chart-30d');
+
+            if (days === 7) {
+                btn7.className = "px-3 py-1 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-white";
+                btn30.className = "px-3 py-1 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-white";
+            } else {
+                btn30.className = "px-3 py-1 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-white";
+                btn7.className = "px-3 py-1 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-white";
+            }
+
+            const dates = [];
+            for (let i = days - 1; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                dates.push(d.toISOString().split('T')[0]);
+            }
+
+            let maxVal = 10;
+            dates.forEach(d => {
+                const item = statsDailyData[d] || { views: 0, clicks: 0 };
+                if (Number(item.views || 0) > maxVal) maxVal = Number(item.views);
+                if (Number(item.clicks || 0) > maxVal) maxVal = Number(item.clicks);
+            });
+
+            const chart = document.getElementById('chart-container');
+            chart.innerHTML = '';
+
+            dates.forEach(d => {
+                const item = statsDailyData[d] || { views: 0, clicks: 0 };
+                const v = Number(item.views || 0);
+                const c = Number(item.clicks || 0);
+
+                const vHeight = Math.max(4, Math.round((v / maxVal) * 160));
+                const cHeight = Math.max(4, Math.round((c / maxVal) * 160));
+
+                const col = document.createElement('div');
+                col.className = "flex-1 flex flex-col items-center justify-end h-full min-w-[28px] group relative";
+                col.innerHTML = `
+                    <div class="flex items-end gap-1 mb-2">
+                        <div style="height: ${vHeight}px;" class="w-2.5 sm:w-3.5 bg-blue-500 rounded-t-sm transition-all duration-300 group-hover:bg-blue-400" title="${v} Kunjungan"></div>
+                        <div style="height: ${cHeight}px;" class="w-2.5 sm:w-3.5 bg-emerald-500 rounded-t-sm transition-all duration-300 group-hover:bg-emerald-400" title="${c} Klik"></div>
+                    </div>
+                    <span class="text-[9px] text-slate-400 font-mono">${d.slice(5)}</span>
+
+                    <!-- Tooltip Hover -->
+                    <div class="absolute -top-10 bg-slate-900 text-white text-[10px] py-1 px-2 rounded-lg opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap z-20 shadow-md">
+                        ${d}: ${v} views, ${c} clicks
+                    </div>
+                `;
+                chart.appendChild(col);
+            });
+        };
+
+        function renderLinksPerformanceTable(sortedLinks, totalClicks) {
+            const table = document.getElementById('analytics-links-table');
+            table.innerHTML = '';
+
+            if (sortedLinks.length === 0) {
+                table.innerHTML = `<p class="text-xs text-slate-400">Belum ada tautan yang terdaftar.</p>`;
+                return;
+            }
+
+            sortedLinks.forEach((l, idx) => {
+                const clicks = Number(l.clickCount) || 0;
+                const percentage = totalClicks > 0 ? Math.round((clicks / totalClicks) * 100) : 0;
+
+                const row = document.createElement('div');
+                row.className = "p-3 rounded-2xl bg-white/40 dark:bg-slate-800/40 border border-slate-200/50 dark:border-slate-700/50 space-y-2";
+                row.innerHTML = `
+                    <div class="flex items-center justify-between text-xs">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center font-bold text-[10px] shrink-0">${idx + 1}</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 truncate">${sanitizeText(l.title)}</span>
+                        </div>
+                        <div class="font-semibold text-slate-600 dark:text-slate-300 shrink-0 flex items-center gap-1">
+                            <span>${clicks} klik</span>
+                            <span class="text-[10px] text-slate-400">(${percentage}%)</span>
+                        </div>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                        <div class="bg-accent h-full rounded-full transition-all duration-500" style="width: ${percentage}%;"></div>
+                    </div>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        // 17. Migrasi Data Lama di Browser (One-Click Migration dengan Sesi Admin)
+        window.executeBrowserMigration = async () => {
+            if (!currentUser || currentUser.email !== ADMIN_EMAIL) {
+                alert("Akses ditolak: Hanya admin yang dapat menjalankan migrasi.");
+                return;
+            }
+
+            const btn = document.getElementById('btn-migrate');
+            btn.disabled = true;
+            btn.innerHTML = `<i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i> Memigrasikan...`;
+
+            try {
+                const oldAppsKeys = Object.keys(rawAppsData || {});
+                if (oldAppsKeys.length === 0) {
+                    alert("Tidak ada data aplikasi lama untuk dimigrasikan.");
+                    return;
+                }
+
+                const existingTitles = new Set(linksData.map(l => l.title));
+                const updates = {};
+                let count = 0;
+
+                oldAppsKeys.forEach((k, idx) => {
+                    const old = rawAppsData[k];
+                    // Idempotensi: cek jika belum ada
+                    if (!existingTitles.has(old.name)) {
+                        const newId = k; // pertahankan id asli agar idempotent
+                        updates[`artifacts/${APP_ID}/public/data/links/${newId}`] = {
+                            title: old.name || "Untitled",
+                            url: old.url || "#",
+                            description: old.description || "",
+                            icon: old.iconUrl || "",
+                            category: old.category || "Productivity",
+                            position: linksData.length + count,
+                            isActive: true,
+                            clickCount: 0,
+                            createdAt: old.createdAt || new Date().toISOString(),
+                            updatedAt: new Date().toISOString(),
+                            ownerId: null
+                        };
+                        count++;
+                    }
+                });
+
+                if (count > 0) {
+                    await update(ref(db), updates);
+                    alert(`Sukses memigrasikan ${count} aplikasi ke daftar tautan Bio Link! Data lama tetap aman tersimpan.`);
+                } else {
+                    alert("Semua data lama sudah termigrasi sebelumnya (Idempotent).");
+                }
+
+                document.getElementById('migration-banner').classList.add('hidden');
+            } catch (err) {
+                alert("Terjadi kesalahan migrasi: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Migrasikan Sekarang`;
+                if (window.lucide) lucide.createIcons();
+            }
+        };
+
+        // 18. Auth Logic (Firebase Auth)
         window.handleGoogleLogin = async () => {
             try {
                 await signInWithPopup(auth, provider);
-                // onAuthStateChanged handles the rest
             } catch (error) {
                 alert("Login gagal: " + error.message);
             }
@@ -357,122 +1856,117 @@
 
         window.handleLogout = async () => {
             await signOut(auth);
-            switchView('home');
+            navigateTo('home');
         };
 
         // Listen Auth State
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
+            renderAuthButton();
+
             if (user && user.email === ADMIN_EMAIL) {
-                document.getElementById('admin-email-display').innerText = user.email;
-                renderAuthButton();
-                if(views.login.classList.contains('hidden') === false) switchView('admin');
-            } else {
-                if (user) {
-                    // Logged in but wrong email
-                    alert("Akses ditolak. Email tidak terdaftar sebagai admin.");
-                    signOut(auth);
+                renderAdminView();
+                // Jika sedang di login view atau hash #admin, bawa ke dashboard
+                if (window.location.hash === '#admin' || !document.getElementById('view-login').classList.contains('hidden')) {
+                    navigateTo('admin');
                 }
-                renderAuthButton();
+            } else if (user) {
+                // Login berhasil tapi bukan admin yang sah
+                alert("Akses ditolak: Akun Google ini tidak memiliki izin administrator.");
+                signOut(auth);
+            } else {
+                if (window.location.hash === '#admin') {
+                    navigateTo('login');
+                }
             }
         });
 
-        // --- DATABASE LOGIC ---
-        
-        // Listen Data
-        const dbRef = ref(db, `artifacts/${APP_ID}/public/data/apps`);
-        onValue(dbRef, (snapshot) => {
-            const data = snapshot.val();
-            appsData = [];
+        // 19. Realtime Database Listeners
+        // A. Profile Listener
+        const profileRef = ref(db, `artifacts/${APP_ID}/public/data/profile`);
+        onValue(profileRef, (snap) => {
+            const data = snap.val();
             if (data) {
-                Object.keys(data).forEach(key => {
-                    appsData.push({ id: key, ...data[key] });
+                profileData = { ...profileData, ...data };
+                applyTheme(profileData.theme || 'auto');
+                applyAccent(profileData.accent || 'blue');
+                renderPublicView();
+                if (currentUser && currentUser.email === ADMIN_EMAIL) renderAdminView();
+            } else {
+                // Gunakan default profile
+                applyTheme('auto');
+                applyAccent('blue');
+                renderPublicView();
+            }
+        });
+
+        // B. Links Listener
+        const linksRef = ref(db, `artifacts/${APP_ID}/public/data/links`);
+        onValue(linksRef, (snap) => {
+            const data = snap.val();
+            linksData = [];
+            if (data) {
+                Object.keys(data).forEach(k => {
+                    linksData.push({ id: k, ...data[k] });
                 });
             }
-            // Sort Descending
-            appsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            loadingSpinner.classList.add('hidden');
-            renderApps();
+            renderPublicView();
+            if (currentUser && currentUser.email === ADMIN_EMAIL) renderAdminView();
         });
 
-        // Save Data (Create/Update)
-        window.handleSaveApp = async (e) => {
-            e.preventDefault();
-            if (!currentUser) return alert("Anda harus login!");
+        // C. Stats Listener
+        const statsRef = ref(db, `artifacts/${APP_ID}/public/data/stats_daily`);
+        onValue(statsRef, (snap) => {
+            statsDailyData = snap.val() || {};
+            if (currentUser && currentUser.email === ADMIN_EMAIL) renderAnalyticsView();
+        });
 
-            const id = document.getElementById('app-id').value;
-            const data = {
-                name: document.getElementById('app-name').value,
-                category: document.getElementById('app-category').value,
-                description: document.getElementById('app-desc').value,
-                iconUrl: document.getElementById('app-icon-url').value,
-                url: document.getElementById('app-url').value,
-            };
-
-            try {
-                if (id) {
-                    await update(ref(db, `artifacts/${APP_ID}/public/data/apps/${id}`), data);
+        // D. Old Apps Listener (untuk banner migrasi)
+        const appsRef = ref(db, `artifacts/${APP_ID}/public/data/apps`);
+        onValue(appsRef, (snap) => {
+            rawAppsData = snap.val() || {};
+            const oldAppsCount = Object.keys(rawAppsData).length;
+            const banner = document.getElementById('migration-banner');
+            if (banner) {
+                if (oldAppsCount > 0 && linksData.length < oldAppsCount) {
+                    banner.classList.remove('hidden');
                 } else {
-                    data.createdAt = new Date().toISOString();
-                    await set(push(ref(db, `artifacts/${APP_ID}/public/data/apps`)), data);
+                    banner.classList.add('hidden');
                 }
-                resetForm();
-                alert("Berhasil disimpan!");
-            } catch (error) {
-                alert("Error: " + error.message);
             }
-        };
+        });
 
-        // Delete Data
-        window.deleteApp = async (id) => {
-            if (confirm("Yakin ingin menghapus?")) {
-                await remove(ref(db, `artifacts/${APP_ID}/public/data/apps/${id}`));
+        // 20. Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            // Apply initial theme from system
+            applyTheme('auto');
+            applyAccent('blue');
+
+            // Route check
+            if (window.location.hash === '#admin') {
+                navigateTo('admin');
+            } else if (window.location.hash === '#login') {
+                navigateTo('login');
+            } else {
+                navigateTo('home');
             }
-        };
 
-        // Edit Data (Populate Form)
-        window.triggerEdit = (id) => {
-            const app = appsData.find(a => a.id === id);
-            if (app) {
-                document.getElementById('app-id').value = app.id;
-                document.getElementById('app-name').value = app.name;
-                document.getElementById('app-category').value = app.category;
-                document.getElementById('app-desc').value = app.description;
-                document.getElementById('app-url').value = app.url;
-                document.getElementById('app-icon-url').value = app.iconUrl;
-                document.getElementById('icon-preview').src = app.iconUrl || "https://placehold.co/100x100?text=Icon";
-                
-                document.getElementById('form-title').innerText = "Edit Aplikasi";
-                // Scroll to form
-                document.querySelector('.sticky').scrollIntoView({ behavior: 'smooth' });
+            // Catat page visit
+            recordPageVisit();
+
+            if (window.lucide) lucide.createIcons();
+        });
+
+        // Handle browser Back / Forward buttons
+        window.addEventListener('popstate', () => {
+            if (window.location.hash === '#admin') {
+                navigateTo('admin');
+            } else if (window.location.hash === '#login') {
+                navigateTo('login');
+            } else {
+                navigateTo('home');
             }
-        };
-
-        // Helper: Image to Base64
-        window.handleImageUpload = (input) => {
-            const file = input.files[0];
-            if (file) {
-                if (file.size > 500000) return alert("Gambar terlalu besar (Max 500KB)");
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    document.getElementById('app-icon-url').value = e.target.result;
-                    document.getElementById('icon-preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-
-        // Helper: Reset Form
-        window.resetForm = () => {
-            document.getElementById('app-form').reset();
-            document.getElementById('app-id').value = "";
-            document.getElementById('app-icon-url').value = "";
-            document.getElementById('icon-preview').src = "https://placehold.co/100x100?text=Icon";
-            document.getElementById('form-title').innerText = "Tambah Aplikasi";
-        };
-
-        // Initial Icon Render
-        lucide.createIcons();
+        });
     </script>
 </body>
 </html>

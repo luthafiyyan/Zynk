@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/go/:id", "destination": "/api/go?id=:id" },
+    { "source": "/go/:id", "destination": "/api/go?id=:id" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/admin/:match*", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}
