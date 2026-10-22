@@ -2552,7 +2552,12 @@
                     }, 500);
                 }
             } catch (err) {
-                alert("Login gagal: " + err.message);
+                const msg = err.message || '';
+                if (err.code === 'auth/unauthorized-domain' || msg.includes('requests-from-referer') || msg.includes('blocked')) {
+                    alert("Akses Domain Diblokir oleh Firebase:\n\nDomain 'zynxid.vercel.app' belum dimasukkan ke daftar 'Authorized Domains' di Firebase Console.\n\nCara mengatasi:\n1. Buka Firebase Console (proyek bhavanix-9dcef)\n2. Masuk ke Authentication -> Settings -> Authorized domains\n3. Klik 'Add domain' dan masukkan: zynxid.vercel.app\n4. Simpan, lalu coba login kembali.");
+                } else {
+                    alert("Login gagal: " + err.message);
+                }
             }
         };
 
