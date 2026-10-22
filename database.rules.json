@@ -2,34 +2,49 @@
   "rules": {
     "artifacts": {
       "bhavanix_production": {
-        "public": {
-          "data": {
+        "usernames": {
+          ".read": true,
+          "$usernameLower": {
+            ".write": "auth != null && (!data.exists() || data.child('uid').val() === auth.uid || (newData.exists() && newData.child('uid').val() === auth.uid) || (!newData.exists() && data.child('uid').val() === auth.uid))"
+          }
+        },
+        "users": {
+          "$uid": {
             "profile": {
-              ".read": true,
-              ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com'"
+              ".read": "data.child('isPublic').val() === true || (auth != null && auth.uid === $uid) || (auth != null && auth.token.email === 'haf.hafian@gmail.com')",
+              ".write": "auth != null && (auth.uid === $uid || auth.token.email === 'haf.hafian@gmail.com')"
+            },
+            "sections": {
+              ".read": "root.child('artifacts/bhavanix_production/users/' + $uid + '/profile/isPublic').val() === true || (auth != null && auth.uid === $uid) || (auth != null && auth.token.email === 'haf.hafian@gmail.com')",
+              ".write": "auth != null && (auth.uid === $uid || auth.token.email === 'haf.hafian@gmail.com')"
             },
             "links": {
-              ".read": true,
-              ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com'",
+              ".read": "root.child('artifacts/bhavanix_production/users/' + $uid + '/profile/isPublic').val() === true || (auth != null && auth.uid === $uid) || (auth != null && auth.token.email === 'haf.hafian@gmail.com')",
+              ".write": "auth != null && (auth.uid === $uid || auth.token.email === 'haf.hafian@gmail.com')",
               "$linkId": {
-                // Mengizinkan admin menulis seluruh properti link, atau increment atomic clickCount
-                ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com' || (newData.child('clickCount').exists() && (!data.exists() || newData.child('clickCount').val() >= data.child('clickCount').val()))"
+                // Pemilik dapat menulis apa saja; publik dapat menaikkan clickCount secara atomik
+                ".write": "(auth != null && (auth.uid === $uid || auth.token.email === 'haf.hafian@gmail.com')) || (newData.child('clickCount').exists() && (!data.exists() || newData.child('clickCount').val() >= data.child('clickCount').val()))"
               }
             },
             "stats_daily": {
-              ".read": "auth != null && auth.token.email === 'haf.hafian@gmail.com'",
+              ".read": "auth != null && (auth.uid === $uid || auth.token.email === 'haf.hafian@gmail.com')",
               "$date": {
-                // Publik / serverless dapat menambah views dan clicks harian
-                ".read": "auth != null && auth.token.email === 'haf.hafian@gmail.com'",
+                // Tracking kunjungan dan klik harian
                 ".write": true
               }
-            },
-            "apps": {
-              // Arsip data lama: read-only untuk publik & admin, tidak dihapus sebelum terverifikasi
-              ".read": true,
-              ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com'"
             }
           }
+        },
+        "reports": {
+          ".read": "auth != null && auth.token.email === 'haf.hafian@gmail.com'",
+          "$reportId": {
+            // Publik dapat membuat laporan baru (tidak bisa menimpa yang sudah ada)
+            ".write": "!data.exists()"
+          }
+        },
+        "apps": {
+          ".read": true,
+          ".write": "auth != null && auth.token.email === 'haf.hafian@gmail.com'"
         }
       }
     }

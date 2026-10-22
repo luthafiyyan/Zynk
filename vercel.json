@@ -3,8 +3,9 @@
   "rewrites": [
     { "source": "/api/go/:id", "destination": "/api/go?id=:id" },
     { "source": "/go/:id", "destination": "/api/go?id=:id" },
-    { "source": "/admin", "destination": "/index.html" },
-    { "source": "/admin/:match*", "destination": "/index.html" }
+    { "source": "/api/:match*", "destination": "/api/:match*" },
+    { "source": "/assets/:match*", "destination": "/assets/:match*" },
+    { "source": "/:path*", "destination": "/index.html" }
   ],
   "headers": [
     {
