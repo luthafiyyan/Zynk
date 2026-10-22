@@ -1020,8 +1020,23 @@
                 });
             }
 
-            // Extract Categories from active links
-            const activeLinks = linksData.filter(l => l.isActive);
+            // Extract Categories from active links (dengan fallback otomatis ke data apps jika belum dimigrasikan)
+            let sourceLinks = linksData;
+            if (sourceLinks.length === 0 && rawAppsData && Object.keys(rawAppsData).length > 0) {
+                sourceLinks = Object.entries(rawAppsData).map(([id, app], idx) => ({
+                    id,
+                    title: app.name || 'Untitled',
+                    url: app.url || '#',
+                    description: app.description || '',
+                    icon: app.iconUrl || '',
+                    category: app.category || 'Productivity',
+                    position: idx,
+                    isActive: true,
+                    clickCount: 0
+                }));
+            }
+
+            const activeLinks = sourceLinks.filter(l => l.isActive);
             const categoriesSet = new Set(["Semua"]);
             activeLinks.forEach(l => {
                 if (l.category && l.category.trim()) categoriesSet.add(l.category.trim());
@@ -1921,7 +1936,7 @@
             if (currentUser && currentUser.email === ADMIN_EMAIL) renderAnalyticsView();
         });
 
-        // D. Old Apps Listener (untuk banner migrasi)
+        // D. Old Apps Listener (untuk banner migrasi & fallback render otomatis)
         const appsRef = ref(db, `artifacts/${APP_ID}/public/data/apps`);
         onValue(appsRef, (snap) => {
             rawAppsData = snap.val() || {};
@@ -1933,6 +1948,9 @@
                 } else {
                     banner.classList.add('hidden');
                 }
+            }
+            if (linksData.length === 0) {
+                renderPublicView();
             }
         });
 
