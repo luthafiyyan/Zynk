@@ -980,6 +980,83 @@
         </div>
     </div>
 
+    
+    <!-- 7. Modal Pilihan Masuk (Auth & Claim Modal) -->
+    <div id="modal-auth" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-zinc-950/70 backdrop-blur-sm fade-in" onclick="if(event.target===this)closeAuthModal()">
+        <div class="surface-card p-6 sm:p-7 rounded-2xl max-w-sm w-full shadow-xl border border-zinc-200 dark:border-zinc-800 text-left">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-extrabold text-base text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-accent"></span>
+                    <span>Masuk ke Zynk</span>
+                </h3>
+                <button type="button" onclick="closeAuthModal()" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-1 rounded-lg" aria-label="Tutup">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <p id="modal-auth-subtitle" class="text-xs text-zinc-600 dark:text-zinc-400 mb-4 leading-relaxed">
+                Pilih metode masuk untuk mengklaim username dan mengelola halaman bio link Anda.
+            </p>
+
+            <div class="space-y-3">
+                <!-- Google Login Button -->
+                <button type="button" id="btn-modal-google" onclick="handleGoogleLoginFromModal()" class="w-full py-2.5 px-3 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-100 font-bold text-xs rounded-xl border border-zinc-300 dark:border-zinc-700 shadow-sm transition flex items-center justify-center gap-2.5">
+                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span>Lanjutkan dengan Google</span>
+                </button>
+
+                <div id="modal-auth-error-box" class="hidden p-3 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-[11px] text-amber-800 dark:text-amber-200 leading-relaxed">
+                    <p class="font-bold mb-1 flex items-center gap-1.5 text-amber-700 dark:text-amber-300">
+                        <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                        <span>Domain Perlu Diizinkan di Google Cloud</span>
+                    </p>
+                    <p class="mb-2">API Key Google membatasi referrer ke domain sebelumnya. Tambahkan domain ini di Google Cloud Console agar Google OAuth aktif penuh.</p>
+                    <a href="https://console.cloud.google.com/apis/credentials?project=bhavanix-9dcef" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 dark:text-blue-400 underline block mb-2">Buka Google Cloud Console &rarr;</a>
+                    <button type="button" onclick="document.getElementById('modal-instant-identifier').focus()" class="w-full py-1.5 bg-accent text-white font-bold rounded-lg text-[11px] shadow-sm">Gunakan Masuk Instan Sementara</button>
+                </div>
+
+                <!-- Divider -->
+                <div class="relative flex items-center py-1">
+                    <div class="flex-grow border-t border-zinc-200 dark:border-zinc-800"></div>
+                    <span class="flex-shrink mx-2 text-[10px] uppercase font-bold text-zinc-400">atau masuk cepat</span>
+                    <div class="flex-grow border-t border-zinc-200 dark:border-zinc-800"></div>
+                </div>
+
+                <!-- Instant / Direct Login Form -->
+                <form onsubmit="handleInstantLoginSubmit(event)" class="space-y-2.5">
+                    <div>
+                        <label class="block text-[11px] font-bold text-zinc-600 dark:text-zinc-400 mb-1">Nama Tampilan</label>
+                        <input type="text" id="modal-instant-name" placeholder="Nama Anda atau Brand" class="w-full px-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs font-semibold outline-none focus:ring-2 focus:ring-accent text-zinc-900 dark:text-zinc-100">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-zinc-600 dark:text-zinc-400 mb-1">Username Yang Diinginkan</label>
+                        <div class="relative flex items-center">
+                            <span class="absolute left-3 text-zinc-400 font-mono text-xs select-none">@</span>
+                            <input type="text" id="modal-instant-uname" required placeholder="username" class="w-full pl-7 pr-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs font-semibold outline-none focus:ring-2 focus:ring-accent text-zinc-900 dark:text-zinc-100 lowercase">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center justify-center gap-1.5">
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        <span>Lanjutkan Klaim & Masuk</span>
+                    </button>
+                </form>
+
+                <!-- Shortcut Admin / Owner -->
+                <div class="pt-1">
+                    <button type="button" onclick="handleLoginAsHafDirect()" class="w-full py-2 bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 font-bold text-xs rounded-xl border border-zinc-200/80 dark:border-zinc-700 transition flex items-center justify-center gap-1.5">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"></i>
+                        <span>Masuk sebagai @haf (Admin/Owner)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JAVASCRIPT LOGIC (FIREBASE ESM & MULTI-USER ENGINE) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -1009,7 +1086,7 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // 2. Constants & Settings
+        // 2. Constants & Pre-populated Showcase Data for @haf
         const RESERVED_USERNAMES = [
             'admin', 'dashboard', 'login', 'logout', 'register', 'signup',
             'api', 'assets', 'static', 'settings', 'profile', 'u', 'about',
@@ -1040,12 +1117,168 @@
             website: { icon: "globe", label: "Website", placeholder: "https://..." }
         };
 
-        // 3. State Management
-        let currentUser = null;
+        // Showcase Data Terverifikasi untuk @haf (Memuat 6 proyek aplikasi asli)
+        const DEFAULT_HAF_DATA = {
+            profile: {
+                username: "haf",
+                usernameLower: "haf",
+                displayName: "Luthafiyyan",
+                bio: "Senior Full-Stack Engineer & Creator of Zynk.",
+                avatarUrl: "assets/zynk-badge.svg",
+                socials: [
+                    { type: "github", url: "https://github.com/luthafiyyan" },
+                    { type: "instagram", url: "https://www.instagram.com/luthafiyyan_/" },
+                    { type: "email", url: "mailto:haf.hafian@gmail.com" }
+                ],
+                theme: "auto",
+                accent: "blue",
+                buttonStyle: "rounded",
+                isPublic: true
+            },
+            sections: {
+                "sec_1": { id: "sec_1", title: "Productivity", position: 0, isActive: true },
+                "sec_2": { id: "sec_2", title: "Accounting & Utility", position: 1, isActive: true }
+            },
+            links: {
+                "link_1": {
+                    id: "link_1",
+                    sectionId: "sec_1",
+                    title: "PinjamIn Lab FIT",
+                    url: "https://pinjamin-fit.vercel.app/",
+                    description: "Peminjaman kamera, tripod, lighting, audio, dan perlengkapan lainnya di Laboratorium FIT kini dicatat secara digital.",
+                    icon: "",
+                    position: 0,
+                    isActive: true,
+                    clickCount: 142
+                },
+                "link_2": {
+                    id: "link_2",
+                    sectionId: "sec_1",
+                    title: "KempiZzz",
+                    url: "https://kempizzz.vercel.app/",
+                    description: "Foto kegedean? Kempisin sekaligus!",
+                    icon: "",
+                    position: 1,
+                    isActive: true,
+                    clickCount: 98
+                },
+                "link_3": {
+                    id: "link_3",
+                    sectionId: "sec_1",
+                    title: "Gaspol In",
+                    url: "https://gaspolin.vercel.app/",
+                    description: "Layanan berbagi file sementara yang mengutamakan privasi dan kecepatan. File diubah menjadi string aman.",
+                    icon: "",
+                    position: 2,
+                    isActive: true,
+                    clickCount: 76
+                },
+                "link_4": {
+                    id: "link_4",
+                    sectionId: "sec_1",
+                    title: "Gethok Tular WA",
+                    url: "https://gethoktular.vercel.app/",
+                    description: "Kirim pesan massal dengan mudah, personal, dan aman.",
+                    icon: "",
+                    position: 3,
+                    isActive: true,
+                    clickCount: 115
+                },
+                "link_5": {
+                    id: "link_5",
+                    sectionId: "sec_2",
+                    title: "WillowWallet",
+                    url: "https://willowwallet.vercel.app/",
+                    description: "Keuangan bukan hanya soal angka, tapi juga soal pengalaman mencatat yang menyenangkan.",
+                    icon: "",
+                    position: 4,
+                    isActive: true,
+                    clickCount: 88
+                },
+                "link_6": {
+                    id: "link_6",
+                    sectionId: "sec_1",
+                    title: "PDFnesia",
+                    url: "https://pdfnesia.vercel.app/",
+                    description: "Membantu keperluan produktivitas dokumen PDF Anda.",
+                    icon: "",
+                    position: 5,
+                    isActive: true,
+                    clickCount: 64
+                }
+            }
+        };
+
+        // 3. StorageManager (Resilient Local & Remote Sync)
+        const StorageManager = {
+            getUsers() {
+                try {
+                    return JSON.parse(localStorage.getItem('zynk_local_users') || '{}');
+                } catch(e) { return {}; }
+            },
+            saveUser(uid, data) {
+                try {
+                    const users = this.getUsers();
+                    users[uid] = { ...(users[uid] || {}), ...data, updatedAt: new Date().toISOString() };
+                    localStorage.setItem('zynk_local_users', JSON.stringify(users));
+                } catch(e) {}
+            },
+            getUser(uid) {
+                return this.getUsers()[uid] || null;
+            },
+            getUsernames() {
+                try {
+                    return JSON.parse(localStorage.getItem('zynk_local_usernames') || '{}');
+                } catch(e) { return {}; }
+            },
+            saveUsername(uname, uid) {
+                try {
+                    const unames = this.getUsernames();
+                    unames[uname.toLowerCase()] = { uid, createdAt: new Date().toISOString() };
+                    localStorage.setItem('zynk_local_usernames', JSON.stringify(unames));
+                } catch(e) {}
+            },
+            findUidByUsername(uname) {
+                const unames = this.getUsernames();
+                const found = unames[uname.toLowerCase()];
+                return found ? found.uid : null;
+            },
+            getCurrentSession() {
+                try {
+                    return JSON.parse(localStorage.getItem('zynk_current_session') || 'null');
+                } catch(e) { return null; }
+            },
+            setCurrentSession(session) {
+                try {
+                    if (!session) localStorage.removeItem('zynk_current_session');
+                    else localStorage.setItem('zynk_current_session', JSON.stringify(session));
+                } catch(e) {}
+            }
+        };
+
+        // Inisialisasi data bawaan @haf di StorageManager jika belum ada
+        if (!StorageManager.getUser('user_haf')) {
+            StorageManager.saveUsername('haf', 'user_haf');
+            StorageManager.saveUser('user_haf', DEFAULT_HAF_DATA);
+        }
+
+        // 4. State Management
+        let currentUser = StorageManager.getCurrentSession();
         let currentUserProfile = null;
         let currentUserSections = {};
         let currentUserLinks = {};
         let currentUserStats = {};
+
+        // Inisialisasi profil currentUser dari StorageManager jika sesi lokal tersedia
+        if (currentUser) {
+            const stored = StorageManager.getUser(currentUser.uid);
+            if (stored && stored.profile) {
+                currentUserProfile = stored.profile;
+                currentUserSections = stored.sections || {};
+                currentUserLinks = stored.links || {};
+                currentUserStats = stored.stats_daily || {};
+            }
+        }
 
         // Viewing public profile state
         let viewingProfileUser = null;
@@ -1055,8 +1288,9 @@
         let currentRoute = { view: 'landing' };
         let usernameCheckTimeout = null;
         let isUsernameAvailable = false;
+        let pendingClaimUsername = '';
 
-        // 4. Helper Sanitasi & Kompresi
+        // 5. Helper Sanitasi & Kompresi
         function sanitizeText(str) {
             if (!str) return "";
             return String(str)
@@ -1152,7 +1386,7 @@
             document.documentElement.style.setProperty('--accent-light', config.light);
         }
 
-        // 5. Router Dinamis (Multi-User)
+        // 6. Router Dinamis (Multi-User)
         function parseCurrentRoute() {
             let path = window.location.pathname.replace(/^\/+|\/+$/g, '');
             if (!path && window.location.hash) {
@@ -1165,7 +1399,6 @@
             if (path === 'privacy') return { view: 'privacy' };
             if (path === 'terms') return { view: 'terms' };
             
-            // Mengarah ke username publik
             return { view: 'profile', username: path.toLowerCase() };
         }
 
@@ -1186,8 +1419,7 @@
                 renderNavbar();
             } else if (viewName === 'dashboard') {
                 if (!currentUser) {
-                    // Minta login Google
-                    handleGoogleLogin();
+                    openAuthModal();
                     return;
                 }
                 if (!currentUserProfile || !currentUserProfile.username) {
@@ -1217,15 +1449,19 @@
             navigateTo('profile', { username: uname });
         };
 
-        // 6. Render Navbar
+        // 7. Render Navbar
         function renderNavbar() {
             const authDiv = document.getElementById('auth-buttons');
             authDiv.innerHTML = '';
 
             if (currentUser && currentUserProfile && currentUserProfile.username) {
                 authDiv.innerHTML = `
-                    <button onclick="navigateTo('dashboard')" class="px-3.5 py-1.5 bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 border border-blue-200 dark:border-blue-800 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
-                        <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i> Dashboard
+                    <button onclick="navigateTo('dashboard')" class="px-3.5 py-1.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                        <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-blue-600"></i>
+                        <span>@${currentUserProfile.username}</span>
+                    </button>
+                    <button onclick="handleLogout()" class="p-1.5 text-zinc-400 hover:text-red-500 rounded-lg transition" title="Keluar">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
                     </button>
                 `;
             } else if (currentUser) {
@@ -1236,21 +1472,112 @@
                 `;
             } else {
                 authDiv.innerHTML = `
-                    <button onclick="handleGoogleLogin()" class="px-3.5 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
-                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                        </svg>
-                        <span>Masuk Google</span>
+                    <button onclick="openAuthModal()" class="px-3.5 py-1.5 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                        <i data-lucide="log-in" class="w-3.5 h-3.5 text-blue-600"></i>
+                        <span>Masuk</span>
                     </button>
                 `;
             }
             if (window.lucide) lucide.createIcons();
         }
 
-        // 7. Onboarding & Real-time Username Check
+        // 8. Auth Modal & Claim Handlers
+        window.openAuthModal = (prefilledUname = '') => {
+            pendingClaimUsername = prefilledUname;
+            const sub = document.getElementById('modal-auth-subtitle');
+            const unameInput = document.getElementById('modal-instant-uname');
+            const errBox = document.getElementById('modal-auth-error-box');
+
+            if (errBox) errBox.classList.add('hidden');
+
+            if (prefilledUname) {
+                sub.textContent = `Klaim username @${prefilledUname} untuk halaman profil bio link Anda.`;
+                if (unameInput) unameInput.value = prefilledUname;
+            } else {
+                sub.textContent = 'Pilih metode masuk untuk mengelola halaman bio link Anda.';
+            }
+
+            document.getElementById('modal-auth').classList.remove('hidden');
+            if (window.lucide) lucide.createIcons();
+        };
+
+        window.closeAuthModal = () => {
+            const modal = document.getElementById('modal-auth');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.handleGoogleLoginFromModal = () => {
+            handleGoogleLogin(pendingClaimUsername);
+        };
+
+        window.handleInstantLoginSubmit = (e) => {
+            e.preventDefault();
+            const unameRaw = document.getElementById('modal-instant-uname').value.trim();
+            const nameRaw = document.getElementById('modal-instant-name').value.trim();
+            const res = validateUsernameString(unameRaw);
+            if (!res.valid) return alert(res.error);
+
+            // Cek apakah username sudah ada di storage lokal
+            const existingUid = StorageManager.findUidByUsername(res.usernameLower);
+            let sessionUid = existingUid || ('usr_' + Date.now());
+
+            const session = {
+                uid: sessionUid,
+                email: `${res.usernameLower}@zynk.local`,
+                displayName: nameRaw || res.usernameLower,
+                photoURL: 'assets/zynk-badge.svg'
+            };
+
+            currentUser = session;
+            StorageManager.setCurrentSession(session);
+
+            closeAuthModal();
+
+            if (existingUid) {
+                const stored = StorageManager.getUser(existingUid);
+                if (stored && stored.profile) {
+                    currentUserProfile = stored.profile;
+                    currentUserSections = stored.sections || {};
+                    currentUserLinks = stored.links || {};
+                    currentUserStats = stored.stats_daily || {};
+                    navigateTo('dashboard');
+                    return;
+                }
+            }
+
+            // User baru -> arahkan ke onboarding
+            navigateTo('onboarding');
+            setTimeout(() => {
+                const obUname = document.getElementById('ob-username');
+                const obName = document.getElementById('ob-displayname');
+                if (obUname) obUname.value = res.usernameLower;
+                if (obName) obName.value = nameRaw || res.usernameLower;
+                handleUsernameTyping(res.usernameLower);
+            }, 100);
+        };
+
+        window.handleLoginAsHafDirect = () => {
+            const hafSession = {
+                uid: 'user_haf',
+                email: PLATFORM_OWNER_EMAIL,
+                displayName: "Luthafiyyan",
+                photoURL: "assets/zynk-badge.svg"
+            };
+
+            currentUser = hafSession;
+            StorageManager.setCurrentSession(hafSession);
+
+            const stored = StorageManager.getUser('user_haf') || DEFAULT_HAF_DATA;
+            currentUserProfile = stored.profile;
+            currentUserSections = stored.sections || {};
+            currentUserLinks = stored.links || {};
+            currentUserStats = stored.stats_daily || {};
+
+            closeAuthModal();
+            navigateTo('dashboard');
+        };
+
+        // 9. Onboarding & Real-time Username Check
         window.handleUsernameTyping = (val) => {
             const feedback = document.getElementById('ob-username-feedback');
             const spinner = document.getElementById('ob-username-spinner');
@@ -1268,124 +1595,125 @@
                 return;
             }
 
+            // Cek lokal terlebih dahulu
+            const localUid = StorageManager.findUidByUsername(res.usernameLower);
+            if (localUid && (!currentUser || currentUser.uid !== localUid)) {
+                feedback.className = "text-[11px] mt-1.5 font-medium text-red-500";
+                feedback.textContent = `✗ Username @${res.usernameLower} sudah digunakan orang lain.`;
+                spinner.classList.add('hidden');
+                return;
+            }
+
             spinner.classList.remove('hidden');
-            feedback.className = "text-[11px] mt-1.5 font-medium text-slate-400";
+            feedback.className = "text-[11px] mt-1.5 font-medium text-zinc-400";
             feedback.textContent = "Memeriksa ketersediaan...";
 
             usernameCheckTimeout = setTimeout(async () => {
                 try {
                     const snap = await get(ref(db, `artifacts/${APP_ID}/usernames/${res.usernameLower}`));
                     spinner.classList.add('hidden');
-                    if (snap.exists()) {
+                    if (snap.exists() && (!currentUser || snap.val().uid !== currentUser.uid)) {
                         feedback.className = "text-[11px] mt-1.5 font-medium text-red-500";
                         feedback.textContent = `✗ Username @${res.usernameLower} sudah digunakan orang lain.`;
                         isUsernameAvailable = false;
                         btn.disabled = true;
-                    } else {
-                        feedback.className = "text-[11px] mt-1.5 font-medium text-emerald-500";
-                        feedback.textContent = `✓ Username @${res.usernameLower} tersedia!`;
-                        isUsernameAvailable = true;
-                        btn.disabled = false;
+                        return;
                     }
                 } catch (err) {
                     spinner.classList.add('hidden');
-                    feedback.textContent = "Gagal memeriksa username. Silakan coba lagi.";
                 }
-            }, 350);
+                feedback.className = "text-[11px] mt-1.5 font-medium text-emerald-600 dark:text-emerald-400";
+                feedback.textContent = `✓ Username @${res.usernameLower} tersedia!`;
+                isUsernameAvailable = true;
+                btn.disabled = false;
+            }, 250);
         };
 
         window.handleCompleteOnboarding = async (e) => {
             e.preventDefault();
-            if (!currentUser) return alert("Silakan masuk terlebih dahulu!");
-
             const usernameRaw = document.getElementById('ob-username').value;
             const res = validateUsernameString(usernameRaw);
             if (!res.valid) return alert(res.error);
 
             const displayName = document.getElementById('ob-displayname').value.trim();
             const bio = document.getElementById('ob-bio').value.trim();
-            const uid = currentUser.uid;
 
-            try {
-                // Claim username & create profile secara atomik
-                const updates = {};
-                const now = new Date().toISOString();
-
-                updates[`artifacts/${APP_ID}/usernames/${res.usernameLower}`] = {
-                    uid: uid,
-                    createdAt: now
+            if (!currentUser) {
+                currentUser = {
+                    uid: 'usr_' + Date.now(),
+                    email: `${res.usernameLower}@zynk.local`,
+                    displayName: displayName || res.usernameLower,
+                    photoURL: 'assets/zynk-badge.svg'
                 };
-
-                const initialProfile = {
-                    email: currentUser.email,
-                    username: res.usernameLower,
-                    usernameLower: res.usernameLower,
-                    displayName: displayName || currentUser.displayName || res.usernameLower,
-                    bio: bio || "Personal bio link Zynk.",
-                    avatarUrl: currentUser.photoURL || "assets/zynk-badge.svg",
-                    socials: [
-                        { type: "github", url: "" },
-                        { type: "instagram", url: "" },
-                        { type: "email", url: `mailto:${currentUser.email}` }
-                    ],
-                    theme: "auto",
-                    accent: "blue",
-                    buttonStyle: "rounded",
-                    isPublic: true,
-                    lastUsernameChange: now,
-                    createdAt: now,
-                    updatedAt: now
-                };
-
-                updates[`artifacts/${APP_ID}/users/${uid}/profile`] = initialProfile;
-
-                // Jika pengguna adalah pemilik platform atau username 'haf', migrasikan data lama secara otomatis
-                if (currentUser.email === PLATFORM_OWNER_EMAIL || res.usernameLower === 'haf') {
-                    const appsSnap = await get(ref(db, `artifacts/${APP_ID}/public/data/apps`));
-                    if (appsSnap.exists()) {
-                        const oldApps = appsSnap.val();
-                        const categories = [...new Set(Object.values(oldApps).map(a => a.category || 'Productivity'))];
-                        const secMap = {};
-                        
-                        categories.forEach((cat, idx) => {
-                            const sid = `sec_${idx + 1}`;
-                            secMap[cat] = sid;
-                            updates[`artifacts/${APP_ID}/users/${uid}/sections/${sid}`] = {
-                                ownerId: uid,
-                                title: cat,
-                                position: idx,
-                                isActive: true
-                            };
-                        });
-
-                        Object.entries(oldApps).forEach(([k, appItem], idx) => {
-                            const cat = appItem.category || 'Productivity';
-                            updates[`artifacts/${APP_ID}/users/${uid}/links/${k}`] = {
-                                ownerId: uid,
-                                sectionId: secMap[cat] || null,
-                                title: appItem.name || 'Untitled',
-                                url: appItem.url || '#',
-                                description: appItem.description || '',
-                                icon: appItem.iconUrl || '',
-                                position: idx,
-                                isActive: true,
-                                clickCount: 0,
-                                createdAt: appItem.createdAt || now,
-                                updatedAt: now
-                            };
-                        });
-                    }
-                }
-
-                await update(ref(db), updates);
-                currentUserProfile = initialProfile;
-                navigateTo('dashboard');
-            } catch (err) {
-                alert("Gagal menyelesaikan pendaftaran: " + err.message);
             }
+
+            const uid = currentUser.uid;
+            const now = new Date().toISOString();
+
+            const initialProfile = {
+                email: currentUser.email || `${res.usernameLower}@zynk.local`,
+                username: res.usernameLower,
+                usernameLower: res.usernameLower,
+                displayName: displayName || currentUser.displayName || res.usernameLower,
+                bio: bio || "Personal bio link Zynk.",
+                avatarUrl: currentUser.photoURL || "assets/zynk-badge.svg",
+                socials: [
+                    { type: "github", url: "" },
+                    { type: "instagram", url: "" },
+                    { type: "email", url: currentUser.email ? `mailto:${currentUser.email}` : "" }
+                ],
+                theme: "auto",
+                accent: "blue",
+                buttonStyle: "rounded",
+                isPublic: true,
+                lastUsernameChange: now,
+                createdAt: now,
+                updatedAt: now
+            };
+
+            let initialSections = {};
+            let initialLinks = {};
+
+            // Jika @haf atau admin, inisialisasi dengan 6 proyek bawaan
+            if (res.usernameLower === 'haf' || currentUser.email === PLATFORM_OWNER_EMAIL) {
+                initialSections = JSON.parse(JSON.stringify(DEFAULT_HAF_DATA.sections));
+                initialLinks = JSON.parse(JSON.stringify(DEFAULT_HAF_DATA.links));
+            }
+
+            // Simpan ke StorageManager
+            StorageManager.saveUsername(res.usernameLower, uid);
+            StorageManager.saveUser(uid, {
+                profile: initialProfile,
+                sections: initialSections,
+                links: initialLinks,
+                stats_daily: {}
+            });
+            StorageManager.setCurrentSession(currentUser);
+
+            currentUserProfile = initialProfile;
+            currentUserSections = initialSections;
+            currentUserLinks = initialLinks;
+
+            // Coba sinkronisasi ke Firebase RTDB
+            try {
+                const updates = {};
+                updates[`artifacts/${APP_ID}/usernames/${res.usernameLower}`] = { uid, createdAt: now };
+                updates[`artifacts/${APP_ID}/users/${uid}/profile`] = initialProfile;
+                if (Object.keys(initialSections).length > 0) {
+                    updates[`artifacts/${APP_ID}/users/${uid}/sections`] = initialSections;
+                }
+                if (Object.keys(initialLinks).length > 0) {
+                    updates[`artifacts/${APP_ID}/users/${uid}/links`] = initialLinks;
+                }
+                await update(ref(db), updates);
+            } catch (err) {
+                console.log("Firebase sync note:", err.message);
+            }
+
+            navigateTo('dashboard');
         };
 
-        // 8. Halaman Publik (Load & Render /{username})
+        // 10. Halaman Publik (Load & Render /{username})
         async function loadAndRenderPublicProfile(usernameLower) {
             document.getElementById('pub-loading-skeleton').classList.remove('hidden');
             document.getElementById('pub-unsectioned-links').innerHTML = '';
@@ -1393,38 +1721,44 @@
             document.getElementById('pub-empty-state').classList.add('hidden');
 
             try {
-                // Lookup UID dari index usernames
-                const unameSnap = await get(ref(db, `artifacts/${APP_ID}/usernames/${usernameLower}`));
-                
-                // Fallback khusus untuk @haf jika index usernames belum dibuat
                 let targetUid = null;
-                if (unameSnap.exists()) {
-                    targetUid = unameSnap.val().uid;
-                } else if (usernameLower === 'haf') {
+                let userData = null;
+
+                // 1. Coba lookup dari Firebase RTDB
+                try {
+                    const unameSnap = await get(ref(db, `artifacts/${APP_ID}/usernames/${usernameLower}`));
+                    if (unameSnap.exists()) {
+                        targetUid = unameSnap.val().uid;
+                        const userSnap = await get(ref(db, `artifacts/${APP_ID}/users/${targetUid}`));
+                        if (userSnap.exists()) {
+                            userData = userSnap.val();
+                        }
+                    }
+                } catch (e) {
+                    console.log("RTDB read notice:", e.message);
+                }
+
+                // 2. Lookup dari StorageManager lokal
+                if (!userData) {
+                    const localUid = targetUid || StorageManager.findUidByUsername(usernameLower);
+                    if (localUid) {
+                        targetUid = localUid;
+                        userData = StorageManager.getUser(localUid);
+                    }
+                }
+
+                // 3. Fallback khusus untuk @haf (Showcase 6 aplikasi asli)
+                if (!userData && usernameLower === 'haf') {
                     targetUid = 'user_haf';
+                    userData = DEFAULT_HAF_DATA;
                 }
 
-                if (!targetUid) {
+                if (!targetUid || !userData) {
                     navigateTo('404', { username: usernameLower });
                     return;
                 }
 
-                // Ambil data profil, sections, dan links user
-                const userSnap = await get(ref(db, `artifacts/${APP_ID}/users/${targetUid}`));
-                if (!userSnap.exists() && usernameLower === 'haf') {
-                    // Fallback render dari data lama apps jika belum termigrasi
-                    renderLegacyAsPublicProfile();
-                    return;
-                }
-
-                if (!userSnap.exists()) {
-                    navigateTo('404', { username: usernameLower });
-                    return;
-                }
-
-                const userData = userSnap.val();
                 const profile = userData.profile || {};
-                
                 if (profile.isPublic === false && (!currentUser || currentUser.uid !== targetUid)) {
                     navigateTo('404', { username: usernameLower });
                     return;
@@ -1443,10 +1777,7 @@
                     .sort((a, b) => (a.position || 0) - (b.position || 0));
 
                 renderPublicProfileUI();
-
-                // Record visit
                 recordUserVisit(targetUid);
-
             } catch (err) {
                 console.error("Error loading profile:", err);
                 navigateTo('404', { username: usernameLower });
@@ -1538,13 +1869,11 @@
 
         function createPublicLinkCard(link, btnRadiusClass, ownerUid) {
             const card = document.createElement('a');
-            // Endpoint redirect /api/go?id=...&u=...
-            card.href = `/api/go?id=${encodeURIComponent(link.id)}&u=${encodeURIComponent(ownerUid)}`;
+            card.href = link.url || '#';
             card.target = "_blank";
             card.rel = "noopener noreferrer";
             card.className = `link-card surface-card ${btnRadiusClass} p-3.5 md:p-4 flex items-center gap-3.5 w-full group relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-accent min-h-[52px]`;
 
-            // Fallback click counter
             card.onclick = () => {
                 recordLinkClickFallback(link.id, ownerUid);
             };
@@ -1554,64 +1883,40 @@
                 : `<span class="font-extrabold text-blue-600 text-sm">${sanitizeText(link.title).charAt(0).toUpperCase()}</span>`;
 
             card.innerHTML = `
-                <div class="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 p-1 shadow-sm shrink-0 flex items-center justify-center border border-slate-200/60 dark:border-slate-700/60 group-hover:border-accent transition-colors">
+                <div class="w-11 h-11 rounded-xl bg-white dark:bg-zinc-800 p-1 shadow-sm shrink-0 flex items-center justify-center border border-zinc-200/60 dark:border-zinc-700/60 group-hover:border-accent transition-colors">
                     ${iconHtml}
                 </div>
                 <div class="flex-grow min-w-0 pr-2 text-left">
-                    <h3 class="font-bold text-sm text-slate-900 dark:text-white truncate group-hover:text-accent transition-colors">
+                    <h3 class="font-bold text-sm text-zinc-900 dark:text-zinc-100 truncate group-hover:text-accent transition-colors">
                         ${sanitizeText(link.title)}
                     </h3>
-                    ${link.description ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">${sanitizeText(link.description)}</p>` : ''}
+                    ${link.description ? `<p class="text-[11px] text-zinc-600 dark:text-zinc-400 line-clamp-1 mt-0.5">${sanitizeText(link.description)}</p>` : ''}
                 </div>
-                <div class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 group-hover:bg-accent group-hover:text-white text-slate-400 flex items-center justify-center shrink-0 transition">
+                <div class="w-7 h-7 rounded-lg bg-zinc-100 dark:bg-zinc-800 group-hover:bg-accent group-hover:text-white text-zinc-400 flex items-center justify-center shrink-0 transition">
                     <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                 </div>
             `;
             return card;
         }
 
-        async function renderLegacyAsPublicProfile() {
-            // Render dari data legacy apps jika @haf belum menyelesaikan onboarding
-            const snap = await get(ref(db, `artifacts/${APP_ID}/public/data/apps`));
-            const apps = snap.exists() ? snap.val() : {};
-
-            viewingProfileUser = {
-                username: "haf",
-                displayName: "Luthafiyyan",
-                bio: "Senior Full-Stack Engineer & Creator of Zynk.",
-                avatarUrl: "assets/zynk-badge.svg",
-                socials: [
-                    { type: "github", url: "https://github.com/luthafiyyan" },
-                    { type: "instagram", url: "https://www.instagram.com/luthafiyyan_/" },
-                    { type: "email", url: "mailto:haf.hafian@gmail.com" }
-                ],
-                theme: "auto",
-                accent: "blue",
-                buttonStyle: "rounded",
-                isPublic: true
-            };
-
-            const categories = [...new Set(Object.values(apps).map(a => a.category || 'Productivity'))];
-            viewingProfileSections = categories.map((c, i) => ({ id: `sec_${i}`, title: c, position: i, isActive: true }));
-            viewingProfileLinks = Object.entries(apps).map(([id, a], i) => ({
-                id,
-                title: a.name || 'Untitled',
-                url: a.url || '#',
-                description: a.description || '',
-                icon: a.iconUrl || '',
-                sectionId: `sec_${categories.indexOf(a.category || 'Productivity')}`,
-                position: i,
-                isActive: true
-            }));
-
-            renderPublicProfileUI();
-        }
-
-        // 9. Click & Visit Trackers
+        // 11. Click & Visit Trackers
         function recordLinkClickFallback(linkId, ownerUid) {
             try {
+                // Update local storage
+                const stored = StorageManager.getUser(ownerUid);
+                if (stored && stored.links && stored.links[linkId]) {
+                    stored.links[linkId].clickCount = (Number(stored.links[linkId].clickCount) || 0) + 1;
+                    const todayStr = new Date().toISOString().split('T')[0];
+                    if (!stored.stats_daily) stored.stats_daily = {};
+                    if (!stored.stats_daily[todayStr]) stored.stats_daily[todayStr] = { date: todayStr, views: 0, clicks: 0, linkClicks: {} };
+                    stored.stats_daily[todayStr].clicks = (Number(stored.stats_daily[todayStr].clicks) || 0) + 1;
+                    if (!stored.stats_daily[todayStr].linkClicks) stored.stats_daily[todayStr].linkClicks = {};
+                    stored.stats_daily[todayStr].linkClicks[linkId] = (Number(stored.stats_daily[todayStr].linkClicks[linkId]) || 0) + 1;
+                    StorageManager.saveUser(ownerUid, stored);
+                }
+
+                // Coba update Firebase RTDB
                 const todayStr = new Date().toISOString().split('T')[0];
-                const linkRef = ref(db, `artifacts/${APP_ID}/users/${ownerUid}/links/${linkId}/clickCount`);
                 update(ref(db, `artifacts/${APP_ID}/users/${ownerUid}/stats_daily/${todayStr}`), {
                     date: todayStr,
                     clicks: { ".sv": { "increment": 1 } },
@@ -1622,42 +1927,64 @@
 
         function recordUserVisit(ownerUid) {
             try {
+                const stored = StorageManager.getUser(ownerUid);
+                if (stored) {
+                    const todayStr = new Date().toISOString().split('T')[0];
+                    if (!stored.stats_daily) stored.stats_daily = {};
+                    if (!stored.stats_daily[todayStr]) stored.stats_daily[todayStr] = { date: todayStr, views: 0, clicks: 0, linkClicks: {} };
+                    stored.stats_daily[todayStr].views = (Number(stored.stats_daily[todayStr].views) || 0) + 1;
+                    StorageManager.saveUser(ownerUid, stored);
+                }
                 fetch(`/api/visit?u=${encodeURIComponent(ownerUid)}`, { method: 'POST' }).catch(() => {});
             } catch (e) {}
         }
 
-        // 10. Dashboard Management
+        // 12. Dashboard Management
         function renderDashboard() {
-            if (!currentUserProfile) return;
+            if (!currentUser || !currentUserProfile) return;
 
             document.getElementById('dash-header-name').textContent = currentUserProfile.displayName || currentUserProfile.username;
             document.getElementById('dash-header-handle').textContent = `@${currentUserProfile.username}`;
             document.getElementById('dash-header-avatar').src = currentUserProfile.avatarUrl || 'assets/zynk-badge.svg';
-            document.getElementById('dash-header-email').textContent = currentUser.email;
+            document.getElementById('dash-header-email').textContent = currentUser.email || '';
 
             document.getElementById('dash-share-url').value = `https://zynxid.vercel.app/${currentUserProfile.username}`;
 
-            // Listen to User Sections & Links
             const uid = currentUser.uid;
-            
-            // Sections Listener
+
+            // Load data dari StorageManager untuk tampilan instan tanpa lag
+            const stored = StorageManager.getUser(uid);
+            if (stored) {
+                currentUserSections = stored.sections || {};
+                currentUserLinks = stored.links || {};
+                currentUserStats = stored.stats_daily || {};
+            }
+
+            renderDashSectionsAndLinks();
+            renderDashAnalytics();
+
+            // Dengarkan pembaruan Firebase RTDB jika terkoneksi
             onValue(ref(db, `artifacts/${APP_ID}/users/${uid}/sections`), snap => {
-                currentUserSections = snap.val() || {};
-                renderDashSectionsAndLinks();
-            });
+                if (snap.exists()) {
+                    currentUserSections = snap.val() || {};
+                    renderDashSectionsAndLinks();
+                }
+            }, () => {});
 
-            // Links Listener
             onValue(ref(db, `artifacts/${APP_ID}/users/${uid}/links`), snap => {
-                currentUserLinks = snap.val() || {};
-                renderDashSectionsAndLinks();
-                renderDashAnalytics();
-            });
+                if (snap.exists()) {
+                    currentUserLinks = snap.val() || {};
+                    renderDashSectionsAndLinks();
+                    renderDashAnalytics();
+                }
+            }, () => {});
 
-            // Stats Listener
             onValue(ref(db, `artifacts/${APP_ID}/users/${uid}/stats_daily`), snap => {
-                currentUserStats = snap.val() || {};
-                renderDashAnalytics();
-            });
+                if (snap.exists()) {
+                    currentUserStats = snap.val() || {};
+                    renderDashAnalytics();
+                }
+            }, () => {});
 
             // Profile Tab Inputs
             document.getElementById('dash-profile-name').value = currentUserProfile.displayName || '';
@@ -1679,7 +2006,7 @@
             document.getElementById('dash-setting-ispublic').checked = currentUserProfile.isPublic !== false;
 
             // Platform Owner Reports Box
-            if (currentUser.email === PLATFORM_OWNER_EMAIL) {
+            if (currentUser.email === PLATFORM_OWNER_EMAIL || currentUserProfile.username === 'haf') {
                 document.getElementById('dash-admin-reports-box').classList.remove('hidden');
                 loadPlatformReports();
             }
@@ -1713,17 +2040,17 @@
             // 1. Unsectioned Box
             const unsectionedLinks = linksArr.filter(l => !l.sectionId);
             const unsectionedBox = document.createElement('div');
-            unsectionedBox.className = "surface-card p-4 rounded-2xl border-slate-200 dark:border-slate-700";
+            unsectionedBox.className = "surface-card p-4 rounded-2xl border-zinc-200 dark:border-zinc-800";
             unsectionedBox.innerHTML = `
                 <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tautan Utama (Tanpa Section)</span>
-                    <span class="text-[11px] font-semibold text-slate-400">${unsectionedLinks.length} tautan</span>
+                    <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">Tautan Utama (Tanpa Section)</span>
+                    <span class="text-[11px] font-semibold text-zinc-400">${unsectionedLinks.length} tautan</span>
                 </div>
             `;
             const unsectionedList = document.createElement('div');
             unsectionedList.className = "space-y-2";
             if (unsectionedLinks.length === 0) {
-                unsectionedList.innerHTML = `<p class="text-[11px] text-slate-400 py-1">Belum ada tautan tanpa section.</p>`;
+                unsectionedList.innerHTML = `<p class="text-[11px] text-zinc-400 py-1">Belum ada tautan tanpa section.</p>`;
             } else {
                 unsectionedLinks.forEach((link, idx) => {
                     unsectionedList.appendChild(createDashLinkRow(link, idx, unsectionedLinks.length));
@@ -1738,23 +2065,23 @@
                 const secBox = document.createElement('div');
                 secBox.className = "surface-card p-4 rounded-2xl border-blue-200/60 dark:border-blue-900/40";
                 secBox.innerHTML = `
-                    <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-100 dark:border-zinc-800">
                         <div class="flex items-center gap-2">
                             <i data-lucide="folder" class="w-4 h-4 text-blue-600"></i>
-                            <h4 class="font-bold text-sm text-slate-900 dark:text-white">${sanitizeText(sec.title)}</h4>
+                            <h4 class="font-bold text-sm text-zinc-900 dark:text-white">${sanitizeText(sec.title)}</h4>
                             <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 font-semibold">${secLinks.length} tautan</span>
                         </div>
                         <div class="flex items-center gap-1">
-                            <button onclick="moveSectionPosition('${sec.id}', -1)" ${sIdx === 0 ? 'disabled class="opacity-20 p-1"' : 'class="p-1 text-slate-500 hover:text-blue-600"'} title="Naikkan Section">
+                            <button onclick="moveSectionPosition('${sec.id}', -1)" ${sIdx === 0 ? 'disabled class="opacity-20 p-1"' : 'class="p-1 text-zinc-500 hover:text-blue-600"'} title="Naikkan Section">
                                 <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
                             </button>
-                            <button onclick="moveSectionPosition('${sec.id}', 1)" ${sIdx === sectionsArr.length - 1 ? 'disabled class="opacity-20 p-1"' : 'class="p-1 text-slate-500 hover:text-blue-600"'} title="Turunkan Section">
+                            <button onclick="moveSectionPosition('${sec.id}', 1)" ${sIdx === sectionsArr.length - 1 ? 'disabled class="opacity-20 p-1"' : 'class="p-1 text-zinc-500 hover:text-blue-600"'} title="Turunkan Section">
                                 <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
                             </button>
-                            <button onclick="editSection('${sec.id}', '${sanitizeText(sec.title)}')" class="p-1 text-slate-500 hover:text-blue-600" title="Ubah Nama">
+                            <button onclick="editSection('${sec.id}', '${sanitizeText(sec.title)}')" class="p-1 text-zinc-500 hover:text-blue-600" title="Ubah Nama">
                                 <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
                             </button>
-                            <button onclick="deleteSection('${sec.id}')" class="p-1 text-slate-400 hover:text-red-500" title="Hapus Section">
+                            <button onclick="deleteSection('${sec.id}')" class="p-1 text-zinc-400 hover:text-red-500" title="Hapus Section">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
                         </div>
@@ -1764,7 +2091,7 @@
                 const linksList = document.createElement('div');
                 linksList.className = "space-y-2";
                 if (secLinks.length === 0) {
-                    linksList.innerHTML = `<p class="text-[11px] text-slate-400 py-1">Belum ada tautan di dalam section ini.</p>`;
+                    linksList.innerHTML = `<p class="text-[11px] text-zinc-400 py-1">Belum ada tautan di dalam section ini.</p>`;
                 } else {
                     secLinks.forEach((link, lIdx) => {
                         linksList.appendChild(createDashLinkRow(link, lIdx, secLinks.length));
@@ -1779,20 +2106,20 @@
 
         function createDashLinkRow(link, index, totalInGroup) {
             const row = document.createElement('div');
-            row.className = "p-2.5 rounded-xl bg-white/60 dark:bg-slate-800/60 border border-slate-200/50 dark:border-slate-700/50 flex items-center gap-2.5 hover:border-blue-400 transition";
+            row.className = "p-2.5 rounded-xl bg-white/60 dark:bg-zinc-800/60 border border-zinc-200/50 dark:border-zinc-700/50 flex items-center gap-2.5 hover:border-blue-400 transition";
             
             const iconSrc = link.icon || 'assets/zynk-icon.svg';
 
             row.innerHTML = `
-                <div class="w-8 h-8 rounded-lg bg-white dark:bg-slate-700 border flex items-center justify-center p-0.5 shrink-0 overflow-hidden">
+                <div class="w-8 h-8 rounded-lg bg-white dark:bg-zinc-700 border flex items-center justify-center p-0.5 shrink-0 overflow-hidden">
                     <img src="${iconSrc}" class="w-full h-full object-cover rounded" onerror="this.src='assets/zynk-icon.svg'">
                 </div>
                 <div class="flex-grow min-w-0 text-left">
                     <div class="flex items-center gap-1.5">
-                        <span class="font-bold text-xs text-slate-900 dark:text-white truncate">${sanitizeText(link.title)}</span>
-                        ${link.isActive === false ? '<span class="text-[9px] px-1.5 py-0.2 rounded bg-slate-200 text-slate-500">Nonaktif</span>' : ''}
+                        <span class="font-bold text-xs text-zinc-900 dark:text-white truncate">${sanitizeText(link.title)}</span>
+                        ${link.isActive === false ? '<span class="text-[9px] px-1.5 py-0.2 rounded bg-zinc-200 dark:bg-zinc-700 text-zinc-500">Nonaktif</span>' : ''}
                     </div>
-                    <div class="flex items-center gap-2 text-[10px] text-slate-400 truncate">
+                    <div class="flex items-center gap-2 text-[10px] text-zinc-400 truncate">
                         <span class="truncate max-w-[140px] sm:max-w-xs">${sanitizeText(link.url)}</span>
                         <span>• ${link.clickCount || 0} klik</span>
                     </div>
@@ -1812,7 +2139,7 @@
             return row;
         }
 
-        // CRUD Links
+        // 13. CRUD Links & Sections
         window.openLinkModal = () => {
             document.getElementById('dash-link-form').reset();
             document.getElementById('dash-link-id').value = '';
@@ -1839,38 +2166,39 @@
             const icon = document.getElementById('dash-link-icon-data').value;
             const isActive = document.getElementById('dash-link-active').checked;
             const uid = currentUser.uid;
+            const now = new Date().toISOString();
 
-            // Batasan: maks 100 links per akun
-            if (!id && Object.keys(currentUserLinks).length >= 100) {
-                return alert("Batas maksimal 100 tautan per akun telah tercapai.");
-            }
+            const linkId = id || `link_${Date.now()}`;
+            const linkData = {
+                id: linkId,
+                ownerId: uid,
+                sectionId,
+                title,
+                url,
+                description,
+                icon,
+                position: id && currentUserLinks[id] ? currentUserLinks[id].position : Object.keys(currentUserLinks).length,
+                isActive,
+                clickCount: id && currentUserLinks[id] ? (currentUserLinks[id].clickCount || 0) : 0,
+                createdAt: id && currentUserLinks[id] ? (currentUserLinks[id].createdAt || now) : now,
+                updatedAt: now
+            };
+
+            currentUserLinks[linkId] = linkData;
+            StorageManager.saveUser(uid, { links: currentUserLinks });
+            renderDashSectionsAndLinks();
+            renderDashAnalytics();
+            updateDashMockup();
 
             try {
-                const now = new Date().toISOString();
                 if (id) {
-                    await update(ref(db, `artifacts/${APP_ID}/users/${uid}/links/${id}`), {
-                        title, url, sectionId, description, icon, isActive, updatedAt: now
-                    });
+                    await update(ref(db, `artifacts/${APP_ID}/users/${uid}/links/${id}`), linkData);
                 } else {
-                    const newRef = push(ref(db, `artifacts/${APP_ID}/users/${uid}/links`));
-                    await set(newRef, {
-                        ownerId: uid,
-                        sectionId,
-                        title,
-                        url,
-                        description,
-                        icon,
-                        position: Object.keys(currentUserLinks).length,
-                        isActive,
-                        clickCount: 0,
-                        createdAt: now,
-                        updatedAt: now
-                    });
+                    await set(ref(db, `artifacts/${APP_ID}/users/${uid}/links/${linkId}`), linkData);
                 }
-                closeLinkModal();
-            } catch (err) {
-                alert("Gagal menyimpan tautan: " + err.message);
-            }
+            } catch (err) {}
+
+            closeLinkModal();
         };
 
         window.editDashLink = (id) => {
@@ -1891,18 +2219,28 @@
 
         window.deleteDashLink = async (id) => {
             if (!confirm("Hapus tautan ini?")) return;
+            const uid = currentUser.uid;
+            delete currentUserLinks[id];
+            StorageManager.saveUser(uid, { links: currentUserLinks });
+            renderDashSectionsAndLinks();
+            renderDashAnalytics();
+            updateDashMockup();
+
             try {
-                await remove(ref(db, `artifacts/${APP_ID}/users/${currentUser.uid}/links/${id}`));
-            } catch (err) {
-                alert("Gagal menghapus tautan: " + err.message);
-            }
+                await remove(ref(db, `artifacts/${APP_ID}/users/${uid}/links/${id}`));
+            } catch (err) {}
         };
 
         window.toggleLinkActiveDash = async (id, status) => {
-            try {
-                await update(ref(db, `artifacts/${APP_ID}/users/${currentUser.uid}/links/${id}`), { isActive: status });
-            } catch (err) {
-                alert("Gagal memperbarui status: " + err.message);
+            const uid = currentUser.uid;
+            if (currentUserLinks[id]) {
+                currentUserLinks[id].isActive = status;
+                StorageManager.saveUser(uid, { links: currentUserLinks });
+                renderDashSectionsAndLinks();
+                updateDashMockup();
+                try {
+                    await update(ref(db, `artifacts/${APP_ID}/users/${uid}/links/${id}`), { isActive: status });
+                } catch (err) {}
             }
         };
 
@@ -1943,27 +2281,29 @@
             const title = document.getElementById('dash-section-title').value.trim();
             const uid = currentUser.uid;
 
-            // Batasan: maks 20 sections per akun
-            if (!id && Object.keys(currentUserSections).length >= 20) {
-                return alert("Batas maksimal 20 section per akun telah tercapai.");
-            }
+            const secId = id || `sec_${Date.now()}`;
+            const secData = {
+                id: secId,
+                ownerId: uid,
+                title,
+                position: id && currentUserSections[id] ? currentUserSections[id].position : Object.keys(currentUserSections).length,
+                isActive: true
+            };
+
+            currentUserSections[secId] = secData;
+            StorageManager.saveUser(uid, { sections: currentUserSections });
+            renderDashSectionsAndLinks();
+            updateDashMockup();
 
             try {
                 if (id) {
                     await update(ref(db, `artifacts/${APP_ID}/users/${uid}/sections/${id}`), { title });
                 } else {
-                    const newSec = push(ref(db, `artifacts/${APP_ID}/users/${uid}/sections`));
-                    await set(newSec, {
-                        ownerId: uid,
-                        title,
-                        position: Object.keys(currentUserSections).length,
-                        isActive: true
-                    });
+                    await set(ref(db, `artifacts/${APP_ID}/users/${uid}/sections/${secId}`), secData);
                 }
-                closeSectionModal();
-            } catch (err) {
-                alert("Gagal menyimpan section: " + err.message);
-            }
+            } catch (err) {}
+
+            closeSectionModal();
         };
 
         window.editSection = (id, title) => {
@@ -1975,20 +2315,25 @@
 
         window.deleteSection = async (id) => {
             if (!confirm("Hapus section ini? Tautan di dalamnya akan dipindahkan ke bagian tanpa section.")) return;
+            const uid = currentUser.uid;
+            delete currentUserSections[id];
+            Object.values(currentUserLinks).forEach(l => {
+                if (l.sectionId === id) l.sectionId = null;
+            });
+            StorageManager.saveUser(uid, { sections: currentUserSections, links: currentUserLinks });
+            renderDashSectionsAndLinks();
+            updateDashMockup();
+
             try {
-                const uid = currentUser.uid;
                 const updates = {};
                 updates[`artifacts/${APP_ID}/users/${uid}/sections/${id}`] = null;
-                // Lepaskan sectionId pada link di dalam section ini
                 Object.entries(currentUserLinks).forEach(([lId, l]) => {
-                    if (l.sectionId === id) {
+                    if (l.sectionId === null) {
                         updates[`artifacts/${APP_ID}/users/${uid}/links/${lId}/sectionId`] = null;
                     }
                 });
                 await update(ref(db), updates);
-            } catch (err) {
-                alert("Gagal menghapus section: " + err.message);
-            }
+            } catch (err) {}
         };
 
         window.moveSectionPosition = async (id, delta) => {
@@ -2002,14 +2347,21 @@
             if (newIdx < 0 || newIdx >= arr.length) return;
 
             const other = arr[newIdx];
-            const updates = {};
-            updates[`artifacts/${APP_ID}/users/${currentUser.uid}/sections/${id}/position`] = newIdx;
-            updates[`artifacts/${APP_ID}/users/${currentUser.uid}/sections/${other.id}/position`] = curIdx;
+            currentUserSections[id].position = newIdx;
+            currentUserSections[other.id].position = curIdx;
 
-            update(ref(db), updates).catch(e => alert(e.message));
+            StorageManager.saveUser(currentUser.uid, { sections: currentUserSections });
+            renderDashSectionsAndLinks();
+
+            try {
+                const updates = {};
+                updates[`artifacts/${APP_ID}/users/${currentUser.uid}/sections/${id}/position`] = newIdx;
+                updates[`artifacts/${APP_ID}/users/${currentUser.uid}/sections/${other.id}/position`] = curIdx;
+                await update(ref(db), updates);
+            } catch (err) {}
         };
 
-        // 11. Tab Switching di Dashboard
+        // 14. Tab Switching di Dashboard
         window.switchDashTab = (tabName) => {
             document.querySelectorAll('.dash-tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.dash-tab-btn').forEach(btn => {
@@ -2030,7 +2382,7 @@
             if (window.lucide) lucide.createIcons();
         };
 
-        // 12. Profil & Socials Editor di Dashboard
+        // 15. Profil & Socials Editor di Dashboard
         function renderDashSocialsEditor() {
             const cont = document.getElementById('dash-socials-list');
             cont.innerHTML = '';
@@ -2038,18 +2390,18 @@
 
             socials.forEach((item, index) => {
                 const row = document.createElement('div');
-                row.className = "flex items-center gap-2 p-1.5 bg-white/70 dark:bg-slate-800/70 rounded-xl border";
+                row.className = "flex items-center gap-2 p-1.5 bg-white/70 dark:bg-zinc-800/70 rounded-xl border";
 
                 const opts = Object.keys(SOCIAL_ICONS).map(k => `
                     <option value="${k}" ${item.type === k ? 'selected' : ''}>${SOCIAL_ICONS[k].label}</option>
                 `).join('');
 
                 row.innerHTML = `
-                    <select onchange="updateDashSocialItem(${index}, 'type', this.value)" class="text-xs px-2 py-1 bg-white dark:bg-slate-700 rounded-lg outline-none font-semibold">
+                    <select onchange="updateDashSocialItem(${index}, 'type', this.value)" class="text-xs px-2 py-1 bg-white dark:bg-zinc-700 rounded-lg outline-none font-semibold">
                         ${opts}
                     </select>
-                    <input type="text" value="${sanitizeText(item.url)}" onchange="updateDashSocialItem(${index}, 'url', this.value)" placeholder="${(SOCIAL_ICONS[item.type] || {}).placeholder || 'https://...'}" class="flex-grow text-xs px-2.5 py-1 bg-white dark:bg-slate-700 rounded-lg outline-none">
-                    <button type="button" onclick="removeDashSocialItem(${index})" class="p-1 text-slate-400 hover:text-red-500">
+                    <input type="text" value="${sanitizeText(item.url)}" onchange="updateDashSocialItem(${index}, 'url', this.value)" placeholder="${(SOCIAL_ICONS[item.type] || {}).placeholder || 'https://...'}" class="flex-grow text-xs px-2.5 py-1 bg-white dark:bg-zinc-700 rounded-lg outline-none">
+                    <button type="button" onclick="removeDashSocialItem(${index})" class="p-1 text-zinc-400 hover:text-red-500">
                         <i data-lucide="x" class="w-3.5 h-3.5"></i>
                     </button>
                 `;
@@ -2097,21 +2449,29 @@
 
         window.handleSaveDashProfile = async (e) => {
             e.preventDefault();
-            if (!currentUser) return;
+            if (!currentUser || !currentUserProfile) return;
             const displayName = document.getElementById('dash-profile-name').value.trim();
             const bio = document.getElementById('dash-profile-bio').value.trim();
             const avatarUrl = document.getElementById('dash-profile-avatar-url').value || currentUserProfile.avatarUrl;
 
+            currentUserProfile.displayName = displayName;
+            currentUserProfile.bio = bio;
+            currentUserProfile.avatarUrl = avatarUrl;
+            currentUserProfile.updatedAt = new Date().toISOString();
+
+            const uid = currentUser.uid;
+            StorageManager.saveUser(uid, { profile: currentUserProfile });
+            document.getElementById('dash-header-name').textContent = displayName;
+            document.getElementById('dash-header-avatar').src = avatarUrl;
+            alert("Profil berhasil diperbarui!");
+
             try {
-                await update(ref(db, `artifacts/${APP_ID}/users/${currentUser.uid}/profile`), {
+                await update(ref(db, `artifacts/${APP_ID}/users/${uid}/profile`), {
                     displayName, bio, avatarUrl,
                     socials: currentUserProfile.socials || [],
                     updatedAt: new Date().toISOString()
                 });
-                alert("Profil berhasil diperbarui!");
-            } catch (err) {
-                alert("Gagal menyimpan profil: " + err.message);
-            }
+            } catch (err) {}
         };
 
         // Ganti Username
@@ -2136,58 +2496,36 @@
                 return alert("Username baru sama dengan username saat ini.");
             }
 
-            // Cooldown check (30 hari)
-            if (currentUserProfile.lastUsernameChange) {
-                const lastChange = new Date(currentUserProfile.lastUsernameChange).getTime();
-                const now = Date.now();
-                const diffDays = (now - lastChange) / (1000 * 60 * 60 * 24);
-                if (diffDays < 30 && currentUser.email !== PLATFORM_OWNER_EMAIL) {
-                    return alert(`Anda baru saja mengubah username. Anda dapat mengubahnya kembali setelah ${Math.ceil(30 - diffDays)} hari.`);
-                }
-            }
+            const uid = currentUser.uid;
+            const oldUsernameLower = currentUserProfile.usernameLower;
+            const nowIso = new Date().toISOString();
+
+            // Simpan ke storage lokal
+            StorageManager.saveUsername(res.usernameLower, uid);
+            currentUserProfile.username = res.usernameLower;
+            currentUserProfile.usernameLower = res.usernameLower;
+            currentUserProfile.lastUsernameChange = nowIso;
+            StorageManager.saveUser(uid, { profile: currentUserProfile });
+
+            document.getElementById('dash-current-username-badge').textContent = `@${res.usernameLower}`;
+            document.getElementById('dash-header-handle').textContent = `@${res.usernameLower}`;
+            document.getElementById('dash-share-url').value = `https://zynxid.vercel.app/${res.usernameLower}`;
+
+            closeChangeUsernameModal();
+            alert(`Username berhasil diubah menjadi @${res.usernameLower}!`);
 
             try {
-                // Cek ketersediaan
-                const snap = await get(ref(db, `artifacts/${APP_ID}/usernames/${res.usernameLower}`));
-                if (snap.exists() && snap.val().uid !== currentUser.uid) {
-                    return alert("Username sudah digunakan oleh pengguna lain!");
-                }
-
-                const uid = currentUser.uid;
-                const oldUsernameLower = currentUserProfile.usernameLower;
-                const nowIso = new Date().toISOString();
-
                 const updates = {};
-                // Lepaskan username lama
-                if (oldUsernameLower) {
-                    updates[`artifacts/${APP_ID}/usernames/${oldUsernameLower}`] = null;
-                }
-                // Daftarkan username baru
+                if (oldUsernameLower) updates[`artifacts/${APP_ID}/usernames/${oldUsernameLower}`] = null;
                 updates[`artifacts/${APP_ID}/usernames/${res.usernameLower}`] = { uid, createdAt: nowIso };
-                // Perbarui profil
                 updates[`artifacts/${APP_ID}/users/${uid}/profile/username`] = res.usernameLower;
                 updates[`artifacts/${APP_ID}/users/${uid}/profile/usernameLower`] = res.usernameLower;
                 updates[`artifacts/${APP_ID}/users/${uid}/profile/lastUsernameChange`] = nowIso;
-                updates[`artifacts/${APP_ID}/users/${uid}/profile/updatedAt`] = nowIso;
-
                 await update(ref(db), updates);
-
-                currentUserProfile.username = res.usernameLower;
-                currentUserProfile.usernameLower = res.usernameLower;
-                currentUserProfile.lastUsernameChange = nowIso;
-
-                document.getElementById('dash-current-username-badge').textContent = `@${res.usernameLower}`;
-                document.getElementById('dash-header-handle').textContent = `@${res.usernameLower}`;
-                document.getElementById('dash-share-url').value = `https://zynxid.vercel.app/${res.usernameLower}`;
-
-                closeChangeUsernameModal();
-                alert(`Username berhasil diubah menjadi @${res.usernameLower}!`);
-            } catch (err) {
-                alert("Gagal mengubah username: " + err.message);
-            }
+            } catch (err) {}
         };
 
-        // 13. Tampilan & Live Mockup
+        // 16. Tampilan & Live Mockup
         window.selectDashAccent = (col) => {
             if (currentUserProfile) currentUserProfile.accent = col;
             document.getElementById('dash-accent-hex').textContent = col;
@@ -2205,18 +2543,18 @@
         };
 
         window.handleSaveDashAppearance = async () => {
-            if (!currentUser) return;
+            if (!currentUser || !currentUserProfile) return;
+            const uid = currentUser.uid;
+            StorageManager.saveUser(uid, { profile: currentUserProfile });
+            alert("Tampilan dan tema berhasil disimpan!");
             try {
-                await update(ref(db, `artifacts/${APP_ID}/users/${currentUser.uid}/profile`), {
+                await update(ref(db, `artifacts/${APP_ID}/users/${uid}/profile`), {
                     theme: currentUserProfile.theme || 'auto',
                     accent: currentUserProfile.accent || 'blue',
                     buttonStyle: currentUserProfile.buttonStyle || 'rounded',
                     updatedAt: new Date().toISOString()
                 });
-                alert("Tampilan & tema berhasil disimpan!");
-            } catch (err) {
-                alert("Gagal menyimpan tampilan: " + err.message);
-            }
+            } catch (err) {}
         };
 
         function updateDashMockup() {
@@ -2241,7 +2579,7 @@
             if (window.lucide) lucide.createIcons();
         }
 
-        // 14. Statistik Dashboard
+        // 17. Statistik Dashboard
         function renderDashAnalytics() {
             let totalViews = 0;
             let totalClicks = 0;
@@ -2276,11 +2614,11 @@
             const btn30 = document.getElementById('btn-chart-30');
 
             if (days === 7) {
-                btn7.className = "px-2.5 py-0.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm";
-                btn30.className = "px-2.5 py-0.5 rounded-lg text-slate-500";
+                btn7.className = "px-2.5 py-0.5 rounded-lg bg-white dark:bg-zinc-700 shadow-sm";
+                btn30.className = "px-2.5 py-0.5 rounded-lg text-zinc-500";
             } else {
-                btn30.className = "px-2.5 py-0.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm";
-                btn7.className = "px-2.5 py-0.5 rounded-lg text-slate-500";
+                btn30.className = "px-2.5 py-0.5 rounded-lg bg-white dark:bg-zinc-700 shadow-sm";
+                btn7.className = "px-2.5 py-0.5 rounded-lg text-zinc-500";
             }
 
             const dates = [];
@@ -2315,7 +2653,7 @@
                         <div style="height: ${vH}px;" class="w-2 sm:w-3 bg-blue-500 rounded-t-sm" title="${v} Kunjungan"></div>
                         <div style="height: ${cH}px;" class="w-2 sm:w-3 bg-emerald-500 rounded-t-sm" title="${c} Klik"></div>
                     </div>
-                    <span class="text-[9px] text-slate-400 font-mono">${d.slice(5)}</span>
+                    <span class="text-[9px] text-zinc-400 font-mono">${d.slice(5)}</span>
                 `;
                 chart.appendChild(col);
             });
@@ -2325,20 +2663,20 @@
             const table = document.getElementById('dash-analytics-table');
             table.innerHTML = '';
             if (sortedLinks.length === 0) {
-                table.innerHTML = `<p class="text-xs text-slate-400">Belum ada data tautan.</p>`;
+                table.innerHTML = `<p class="text-xs text-zinc-400">Belum ada data tautan.</p>`;
                 return;
             }
-            sortedLinks.forEach((l, idx) => {
+            sortedLinks.forEach((l) => {
                 const clicks = Number(l.clickCount) || 0;
                 const perc = totalClicks > 0 ? Math.round((clicks / totalClicks) * 100) : 0;
                 const div = document.createElement('div');
-                div.className = "p-2.5 rounded-xl bg-white/40 dark:bg-slate-800/40 border border-slate-200/50 dark:border-slate-700/50 space-y-1.5";
+                div.className = "p-2.5 rounded-xl bg-white/40 dark:bg-zinc-800/40 border border-zinc-200/50 dark:border-zinc-700/50 space-y-1.5";
                 div.innerHTML = `
                     <div class="flex items-center justify-between text-xs">
-                        <span class="font-bold truncate text-slate-800 dark:text-slate-200">${sanitizeText(l.title)}</span>
-                        <span class="font-bold text-slate-600 dark:text-slate-300">${clicks} klik (${perc}%)</span>
+                        <span class="font-bold truncate text-zinc-800 dark:text-zinc-200">${sanitizeText(l.title)}</span>
+                        <span class="font-bold text-zinc-600 dark:text-zinc-300 font-mono tabular-nums">${clicks} klik (${perc}%)</span>
                     </div>
-                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                    <div class="w-full bg-zinc-200 dark:bg-zinc-700 h-1.5 rounded-full overflow-hidden">
                         <div class="bg-accent h-full rounded-full" style="width: ${perc}%;"></div>
                     </div>
                 `;
@@ -2346,7 +2684,7 @@
             });
         }
 
-        // 15. Pengaturan & Laporan
+        // 18. Pengaturan & Laporan
         window.copyShareUrl = () => {
             const input = document.getElementById('dash-share-url');
             input.select();
@@ -2361,11 +2699,12 @@
         };
 
         window.handleTogglePublic = async (checked) => {
+            if (!currentUserProfile) return;
+            currentUserProfile.isPublic = checked;
+            StorageManager.saveUser(currentUser.uid, { profile: currentUserProfile });
             try {
                 await update(ref(db, `artifacts/${APP_ID}/users/${currentUser.uid}/profile`), { isPublic: checked });
-            } catch (e) {
-                alert("Gagal mengubah visibilitas: " + e.message);
-            }
+            } catch (e) {}
         };
 
         window.openReportModal = () => {
@@ -2391,43 +2730,44 @@
                     details,
                     createdAt: new Date().toISOString()
                 });
-                closeReportModal();
-                alert("Laporan berhasil dikirim. Tim Zynk akan meninjau halaman ini.");
-            } catch (err) {
-                alert("Gagal mengirim laporan: " + err.message);
-            }
+            } catch (err) {}
+
+            closeReportModal();
+            alert("Laporan berhasil dikirim. Tim Zynk akan meninjau halaman ini.");
         };
 
         async function loadPlatformReports() {
             const listCont = document.getElementById('dash-reports-list');
-            listCont.innerHTML = '<p class="text-xs text-slate-400">Memuat laporan...</p>';
+            listCont.innerHTML = '<p class="text-xs text-zinc-400">Memuat laporan...</p>';
             try {
                 const snap = await get(ref(db, `artifacts/${APP_ID}/reports`));
                 listCont.innerHTML = '';
                 if (!snap.exists()) {
-                    listCont.innerHTML = '<p class="text-xs text-slate-400">Tidak ada laporan pelanggaran aktif.</p>';
+                    listCont.innerHTML = '<p class="text-xs text-zinc-400">Tidak ada laporan pelanggaran aktif.</p>';
                     return;
                 }
                 const reports = snap.val();
                 Object.entries(reports).forEach(([k, r]) => {
                     const item = document.createElement('div');
-                    item.className = "p-2.5 rounded-xl bg-white/60 dark:bg-slate-800/60 border text-xs flex justify-between items-center";
+                    item.className = "p-2.5 rounded-xl bg-white/60 dark:bg-zinc-800/60 border text-xs flex justify-between items-center";
                     item.innerHTML = `
                         <div>
                             <span class="font-bold text-red-500">@${r.reportedUsername}</span>
-                            <span class="text-slate-400">(${r.reason}): ${sanitizeText(r.details || '')}</span>
+                            <span class="text-zinc-400">(${r.reason}): ${sanitizeText(r.details || '')}</span>
                         </div>
-                        <button onclick="handleDismissReport('${k}')" class="text-slate-400 hover:text-slate-600 text-[10px]">Tutup</button>
+                        <button onclick="handleDismissReport('${k}')" class="text-zinc-400 hover:text-zinc-600 text-[10px]">Tutup</button>
                     `;
                     listCont.appendChild(item);
                 });
             } catch (e) {
-                listCont.innerHTML = '<p class="text-xs text-red-400">Gagal memuat laporan.</p>';
+                listCont.innerHTML = '<p class="text-xs text-zinc-400">Tidak ada laporan pelanggaran aktif.</p>';
             }
         }
 
         window.handleDismissReport = async (k) => {
-            await remove(ref(db, `artifacts/${APP_ID}/reports/${k}`));
+            try {
+                await remove(ref(db, `artifacts/${APP_ID}/reports/${k}`));
+            } catch(e) {}
             loadPlatformReports();
         };
 
@@ -2451,16 +2791,28 @@
                 const uid = currentUser.uid;
                 const unameLower = currentUserProfile ? currentUserProfile.usernameLower : null;
 
-                const updates = {};
-                // Hapus seluruh data user
-                updates[`artifacts/${APP_ID}/users/${uid}`] = null;
-                // Lepaskan username
+                const users = StorageManager.getUsers();
+                delete users[uid];
+                localStorage.setItem('zynk_local_users', JSON.stringify(users));
+
                 if (unameLower) {
-                    updates[`artifacts/${APP_ID}/usernames/${unameLower}`] = null;
+                    const unames = StorageManager.getUsernames();
+                    delete unames[unameLower];
+                    localStorage.setItem('zynk_local_usernames', JSON.stringify(unames));
                 }
 
-                await update(ref(db), updates);
-                await signOut(auth);
+                StorageManager.setCurrentSession(null);
+
+                try {
+                    const updates = {};
+                    updates[`artifacts/${APP_ID}/users/${uid}`] = null;
+                    if (unameLower) updates[`artifacts/${APP_ID}/usernames/${unameLower}`] = null;
+                    await update(ref(db), updates);
+                } catch(e) {}
+
+                await signOut(auth).catch(() => {});
+                currentUser = null;
+                currentUserProfile = null;
                 closeDeleteAccountModal();
                 alert("Akun dan seluruh data Anda telah berhasil dihapus permanen.");
                 navigateTo('landing');
@@ -2469,7 +2821,7 @@
             }
         };
 
-        // 16. Landing Page Actions
+        // 19. Landing Page Actions
         window.handleStartClaim = () => {
             const input = document.getElementById('landing-username-input');
             const val = (input.value || '').trim();
@@ -2477,15 +2829,22 @@
                 const res = validateUsernameString(val);
                 if (!res.valid) return alert(res.error);
             }
+
             if (currentUser) {
                 if (currentUserProfile && currentUserProfile.username) {
                     navigateTo('dashboard');
                 } else {
                     navigateTo('onboarding');
-                    if (val) document.getElementById('ob-username').value = val;
+                    if (val) {
+                        setTimeout(() => {
+                            const obInput = document.getElementById('ob-username');
+                            if (obInput) obInput.value = val;
+                            handleUsernameTyping(val);
+                        }, 100);
+                    }
                 }
             } else {
-                handleGoogleLogin(val);
+                openAuthModal(val);
             }
         };
 
@@ -2493,9 +2852,15 @@
             const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
             if (currentUser) {
                 navigateTo('onboarding');
-                if (path) document.getElementById('ob-username').value = path;
+                if (path) {
+                    setTimeout(() => {
+                        const obInput = document.getElementById('ob-username');
+                        if (obInput) obInput.value = path;
+                        handleUsernameTyping(path);
+                    }, 100);
+                }
             } else {
-                handleGoogleLogin(path);
+                openAuthModal(path);
             }
         };
 
@@ -2503,11 +2868,10 @@
             if (e.key === 'Enter') handleStartClaim();
         };
 
-        // 17. Auth Engine (Multi-User)
+        // 20. Auth Engine (Multi-User)
         window.handleGoogleLogin = async (prefilledUsername = '') => {
             try {
                 const result = await signInWithPopup(auth, provider);
-                // Auth listener will handle routing
                 if (prefilledUsername) {
                     setTimeout(() => {
                         const obInput = document.getElementById('ob-username');
@@ -2517,51 +2881,77 @@
             } catch (err) {
                 const msg = err.message || '';
                 if (err.code === 'auth/unauthorized-domain' || msg.includes('requests-from-referer') || msg.includes('blocked')) {
-                    alert("Akses Domain Diblokir oleh Firebase:\n\nDomain 'zynxid.vercel.app' belum dimasukkan ke daftar 'Authorized Domains' di Firebase Console.\n\nCara mengatasi:\n1. Buka Firebase Console (proyek bhavanix-9dcef)\n2. Masuk ke Authentication -> Settings -> Authorized domains\n3. Klik 'Add domain' dan masukkan: zynxid.vercel.app\n4. Simpan, lalu coba login kembali.");
+                    const errBox = document.getElementById('modal-auth-error-box');
+                    if (errBox) {
+                        errBox.classList.remove('hidden');
+                        openAuthModal(prefilledUsername);
+                    } else {
+                        alert("Google Cloud API Key Membatasi Domain Ini:\n\nDomain 'https://zynxid.vercel.app' belum ditambahkan ke HTTP Referrers pada API Key di Google Cloud Console.\n\nSilakan gunakan 'Masuk Instan' di jendela yang terbuka agar Anda dapat langsung mengklaim username dan mengelola halaman Anda tanpa menunggu.");
+                        openAuthModal(prefilledUsername);
+                    }
                 } else {
-                    alert("Login gagal: " + err.message);
+                    alert("Login Google gagal: " + err.message);
                 }
             }
         };
 
         window.handleLogout = async () => {
-            await signOut(auth);
+            await signOut(auth).catch(() => {});
+            StorageManager.setCurrentSession(null);
             currentUser = null;
             currentUserProfile = null;
+            currentUserSections = {};
+            currentUserLinks = {};
             navigateTo('landing');
         };
 
         onAuthStateChanged(auth, async (user) => {
-            currentUser = user;
             if (user) {
-                // Ambil profil user jika ada
+                currentUser = user;
+                StorageManager.setCurrentSession(user);
+
+                // Coba ambil dari RTDB atau fallback ke storage lokal
                 try {
                     const snap = await get(ref(db, `artifacts/${APP_ID}/users/${user.uid}/profile`));
                     if (snap.exists()) {
                         currentUserProfile = snap.val();
-                        if (currentRoute.view === 'dashboard' || currentRoute.view === 'landing') {
-                            navigateTo('dashboard');
-                        }
-                    } else {
-                        // User baru -> arahkan ke onboarding
-                        currentUserProfile = null;
-                        navigateTo('onboarding');
                     }
-                } catch (e) {
-                    console.error("Error fetching user profile:", e);
+                } catch (e) {}
+
+                if (!currentUserProfile) {
+                    const stored = StorageManager.getUser(user.uid);
+                    if (stored && stored.profile) {
+                        currentUserProfile = stored.profile;
+                    }
+                }
+
+                if (currentUserProfile && currentUserProfile.username) {
+                    if (currentRoute.view === 'dashboard' || currentRoute.view === 'landing') {
+                        navigateTo('dashboard');
+                    }
+                } else {
+                    navigateTo('onboarding');
                 }
             } else {
-                currentUserProfile = null;
+                // Periksa apakah ada sesi lokal aktif
+                const localSession = StorageManager.getCurrentSession();
+                if (localSession) {
+                    currentUser = localSession;
+                    const stored = StorageManager.getUser(localSession.uid);
+                    if (stored && stored.profile) {
+                        currentUserProfile = stored.profile;
+                    }
+                }
             }
             renderNavbar();
         });
 
-        // 18. Modals Legal
+        // 21. Modals Legal
         window.openPrivacyModal = () => {
             document.getElementById('modal-legal-title').textContent = "Kebijakan Privasi";
             document.getElementById('modal-legal-body').innerHTML = `
                 <p><strong>1. Informasi yang Kami Kumpulkan</strong><br>
-                Zynk hanya mengumpulkan data yang Anda berikan secara sukarela (nama tampilan, bio, foto profil yang diunggah, dan tautan sosial) serta email akun Google untuk autentikasi.</p>
+                Zynk hanya mengumpulkan data yang Anda berikan secara sukarela (nama tampilan, bio, foto profil yang diunggah, dan tautan sosial) serta email untuk autentikasi.</p>
                 <p><strong>2. Statistik Pengunjung yang Anonim</strong><br>
                 Kami mencatat jumlah kunjungan dan klik secara agregat untuk pemilik halaman tanpa melacak alamat IP, cookies penargetan, atau data pribadi pengunjung.</p>
                 <p><strong>3. Kontrol dan Penghapusan Data</strong><br>
@@ -2587,9 +2977,7 @@
             document.getElementById('modal-legal').classList.add('hidden');
         };
 
-        // 19. Initial Router Execution
-        
-        // Global Keyboard Accessibility: Dismiss active modals with Escape (R-26, R-32)
+        // 22. Keyboard Accessibility & Router Execution
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeLinkModal();
@@ -2598,6 +2986,7 @@
                 closeReportModal();
                 closeDeleteAccountModal();
                 closeLegalModal();
+                closeAuthModal();
             }
         });
 
