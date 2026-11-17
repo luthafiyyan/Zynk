@@ -2931,6 +2931,20 @@
                     }
                 } else {
                     navigateTo('onboarding');
+                    setTimeout(() => {
+                        const obName = document.getElementById('ob-displayname');
+                        if (obName && !obName.value && user.displayName) {
+                            obName.value = user.displayName;
+                        }
+                        const obUname = document.getElementById('ob-username');
+                        if (obUname && !obUname.value && user.email) {
+                            const suggested = user.email.split('@')[0].replace(/[^a-zA-Z0-9._-]/g, '').toLowerCase().slice(0, 20);
+                            if (suggested.length >= 3) {
+                                obUname.value = suggested;
+                                handleUsernameTyping(suggested);
+                            }
+                        }
+                    }, 120);
                 }
             } else {
                 // Periksa apakah ada sesi lokal aktif
